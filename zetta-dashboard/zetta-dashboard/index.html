@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZettaSystems – Dashboard</title>
+  <!-- Fonte e ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://kit.fontawesome.com/SEU_KIT.js" crossorigin="anonymous"></script>
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/style.css"/>
+  <!-- Import do CSS de login/modal -->
+  <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+  <!-- Spinner de carregamento -->
+  <div id="loadingSpinner"><i class="fas fa-spinner fa-pulse fa-3x"></i></div>
+
+  <!-- Modal de Login -->
+  <div id="loginModal">
+    <div class="box">
+      <h2>🔐 Login ZettaSystems</h2>
+      <input id="inpUser" placeholder="Usuário"/><br/><br/>
+      <input id="inpPass" type="password" placeholder="Senha"/><br/><br/>
+      <button id="btnLoginIndex" type="button">Entrar</button>
+    </div>
+  </div>
+
+  <!-- Toggles -->
+  <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+
+  <!-- Header -->
+  <header class="main-header">
+    <img src="assets/logo.png" alt="ZettaSystems" class="logo-img"/>
+    <div class="texts">
+      <h1>ZettaSystems – Dashboard</h1>
+      <small>Integração de ERP, CRM, E-commerce e Pagamentos</small>
+    </div>
+  </header>
+
+  <!-- Main Nav -->
+  <nav class="main-nav">
+    <a href="#" class="active">Home</a>
+    <a href="zettaMarket.html">ZettaMarket</a>
+    <a href="zettaPayments.html">ZettaPayments</a>
+    <a href="mongoDB.html">Banco de Dados</a>
+    <a href="bi.html">BI Atlas</a>
+    <a href="simulador-de-banco-de-dados.html">Comparativo de Bancos de Dados</a>
+    <a href="atendimento_cliente.html">Atendimento</a>
+    <a href="sobre.html">Sobre Nós</a>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <main>
+    <section class="kpi-section">
+      <!-- Grid de KPI cards -->
+      <div class="kpi-cards">
+        <div class="kpi-card">
+          <h4>Total Transações</h4>
+          <p id="txCount">0</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Valor Acumulado</h4>
+          <p id="txSum" class="accumulated general">0,00</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Última Tx</h4>
+          <p id="txTime">--:--:--</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Anomalias</h4>
+          <p id="kpiAnom" class="anomaly">0</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Taxa Anomalias</h4>
+          <p id="kpiPctAnom" class="anomaly">0%</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Valor Acumulado<br>Loja Física</h4>
+          <p id="txSumPhysical" class="accumulated physical">0,00</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Valor Acumulado<br>E-commerce</h4>
+          <p id="txSumEcommerce" class="accumulated ecommerce">0,00</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Valor ZettaMarket</h4>
+          <p id="sumZettaMarket" class="accumulated zettamarket">0,00</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Valor ZettaPayments</h4>
+          <p id="sumZettaPayments" class="accumulated zettapayments">0,00</p>
+        </div>
+      </div>
+
+      <!-- Feed Recente ao lado -->
+      <div class="feed-box">
+        <h3>Feed Recente</h3>
+        <ul id="feed"></ul>
+      </div>
+    </section>
+
+    <section>
+      <h3>Recebimentos</h3>
+      <div class="table-box">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th>ID</th><th>Origem</th><th>Data</th>
+              <th>Local</th><th>Valor</th><th>Método</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 ZettaSystems</footer>
+
+  <!-- Script único com toda a lógica -->
+  <script src="js/index.js"></script>
+</body>
+</html>

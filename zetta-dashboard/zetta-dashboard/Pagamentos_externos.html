@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZettaPaymento – Simulador de Recebimentos</title>
+  <style>
+    /* ==== LOGIN SCREEN ==== */
+    #loginScreen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    #loginBox {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 300px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    #loginBox h2 {
+      margin-bottom: 1rem;
+      color: #0066cc;
+    }
+    #loginBox .field {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+    #loginBox label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+    }
+    #loginBox input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    #btnLogin {
+      width: 100%;
+      padding: 0.75rem;
+      background: #0066cc;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    /* ==== EXISTING CSS ==== */
+    body {
+      font-family: sans-serif;
+      background: #f4f6f8;
+      margin: 0; padding: 0;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #0066cc;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    main {
+      flex: 1;
+      padding: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .field { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.25rem; font-weight: 600; }
+    select, input {
+      width: 100%; padding: 0.5rem;
+      border: 1px solid #bbb; border-radius: 4px;
+      font-size: 1rem;
+    }
+    select:disabled, input:disabled { background: #eaeaea; }
+    .buttons {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    button {
+      flex: 1; padding: 0.75rem; font-size: 1rem;
+      border: none; border-radius: 4px; color: #fff;
+      cursor: pointer;
+    }
+    button.primary  { background: #0066cc; }
+    button.secondary{ background: #888; }
+    button.success  { background: #28a745; }
+    button.danger   { background: #dc3545; }
+    .status {
+      text-align: center; margin: 1rem 0;
+      padding: 1rem; border-radius: 4px;
+      font-weight: bold; min-height: 2em;
+    }
+    .status.blue  { background: #cce5ff; color: #004085; }
+    .status.green { background: #d4edda; color: #155724; }
+    .status.red   { background: #f8d7da; color: #721c24; }
+    #pixSection { text-align:center; margin-top:1rem; }
+    #pixSection img { width: 150px; height: 150px; }
+
+    #mapSection { margin-top:1rem; height: 250px; border:1px solid #ccc; }
+    #mapSection iframe { width: 100%; height: 100%; border:0; }
+
+    footer {
+      text-align: center; padding: 0.5rem;
+      font-size: 0.85rem; background: #eaeaea;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen">
+    <div id="loginBox">
+      <h2>Entrar no ZettaPaymento</h2>
+      <div class="field">
+        <label for="username">Usuário</label>
+        <input type="text" id="username" placeholder="Digite seu usuário"/>
+      </div>
+      <div class="field">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="Digite sua senha"/>
+      </div>
+      <button id="btnLogin">Login</button>
+    </div>
+  </div>
+
+  <header>ZettaPaymento</header>
+
+  <main>
+    <div class="field">
+      <label for="clientName">Cliente</label>
+      <select id="clientName">
+        <option value="João da Silva,São Paulo">João da Silva</option>
+        <option value="Maria Oliveira,Rio de Janeiro">Maria Oliveira</option>
+        <option value="Carlos Pereira,Belo Horizonte">Carlos Pereira</option>
+        <option value="Ana Beatriz Souza,Curitiba">Ana Beatriz Souza</option>
+        <option value="Rafael Santos Costa,Porto Alegre">Rafael Santos Costa</option>
+        <option value="Patrícia Fernandes Lima,Salvador">Patrícia Fernandes Lima</option>
+        <option value="Murilo Rodrigues Alves,Fortaleza">Murilo Rodrigues Alves</option>
+        <option value="Camila Rocha Monteiro,Recife">Camila Rocha Monteiro</option>
+        <option value="Fernando Carvalho Paiva,Florianópolis">Fernando Carvalho Paiva</option>
+        <option value="Juliana Ribeiro Gomes,Vitória">Juliana Ribeiro Gomes</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Valor (R$)</label>
+      <input type="text" id="amount" value="0,00" disabled/>
+    </div>
+
+    <div class="field">
+      <label>Meio de Pagamento</label>
+      <select id="method" disabled>
+        <option>PIX</option>
+        <option>Cartão Crédito</option>
+        <option>Cartão Débito</option>
+        <option>Dinheiro</option>
+      </select>
+    </div>
+
+    <div class="buttons">
+      <button class="primary"   id="btnReceive">Receber</button>
+      <button class="secondary" id="btnEdit">Editar Dados</button>
+      <button class="success"   id="btnConfirm" disabled>Confirmar</button>
+      <button class="primary"   id="btnNext" style="display:none;">Próximo Cliente</button>
+    </div>
+
+    <div id="statusMessage" class="status blue"></div>
+
+    <div id="pixSection" style="display:none;">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PIX%20ZX123" alt="QR Code PIX"/>
+      <p style="font-size:0.9rem; color:#004085;">Aguardando leitura do QR Code</p>
+    </div>
+
+    <div id="mapSection" style="display:none;">
+      <iframe id="mapFrame" src="" allowfullscreen></iframe>
+    </div>
+  </main>
+
+  <footer>© 2025 ZettaPaymento</footer>
+
+  <script>
+    // FAKE LOGIN
+    document.getElementById('btnLogin').addEventListener('click', () => {
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      if (user && pass) {
+        document.getElementById('loginScreen').style.display = 'none';
+      } else {
+        alert('Por favor, informe usuário e senha.');
+      }
+    });
+
+    // EXISTING JS
+    const collaborator = "Pedro";
+    const btnReceive   = document.getElementById('btnReceive');
+    const btnEdit      = document.getElementById('btnEdit');
+    const btnConfirm   = document.getElementById('btnConfirm');
+    const btnNext      = document.getElementById('btnNext');
+    const statusDiv    = document.getElementById('statusMessage');
+    const clientEl     = document.getElementById('clientName');
+    const methodEl     = document.getElementById('method');
+    const pixSection   = document.getElementById('pixSection');
+    const mapSection   = document.getElementById('mapSection');
+    const mapFrame     = document.getElementById('mapFrame');
+    const amountEl     = document.getElementById('amount');
+    let routeCount = 0, routeMax = 5;
+
+    function randAmount() {
+      return (Math.random() * 490 + 10).toFixed(2).replace('.',',');
+    }
+    function showStatus(text, cls="blue") {
+      statusDiv.className = `status ${cls}`;
+      statusDiv.textContent = text;
+    }
+    function loadNextClient() {
+      methodEl.disabled = true;
+      btnReceive.disabled = false;
+      btnConfirm.disabled = true;
+      btnEdit.disabled = false;
+      btnNext.style.display = 'none';
+      pixSection.style.display = 'none';
+      mapSection.style.display = 'none';
+      amountEl.value = randAmount();
+      showStatus(`Olá ${collaborator}! Pronto para receber o pagamento.`, "blue");
+    }
+
+    btnReceive.addEventListener('click', () => {
+      const [clientName, city] = clientEl.value.split(',');
+      showStatus(`Iniciando recebimento de R$ ${amountEl.value} para ${clientName}…`, "blue");
+      pixSection.style.display = methodEl.value === 'PIX' ? 'block' : 'none';
+      setTimeout(() => {
+        showStatus(`Aguardando autorização da central…`, "blue");
+        btnConfirm.disabled = false;
+        btnReceive.disabled = true;
+      }, 1000);
+    });
+
+    btnEdit.addEventListener('click', () => {
+      methodEl.disabled = false;
+      showStatus(`Edite o meio de pagamento, ${collaborator}, e clique em Receber.`, "blue");
+      btnConfirm.disabled = true;
+      pixSection.style.display = 'none';
+    });
+
+    btnConfirm.addEventListener('click', () => {
+      const success = Math.random() > 0.1;
+      if (success) {
+        showStatus(`✔ Recebimento CONFIRMADO! Central recebeu o valor.`, "green");
+        routeCount++;
+        setTimeout(() => {
+          if (routeCount < routeMax) {
+            showStatus(`Ótimo, ${collaborator}! ${routeMax - routeCount} entrega(s) restante(s).`, "green");
+            btnNext.style.display = 'inline-block';
+          } else {
+            showStatus(`🎉 Parabéns, ${collaborator}! Você finalizou sua rota.`, "green");
+          }
+        }, 1000);
+      } else {
+        showStatus(`✖ Erro no recebimento! Tente outro método.`, "red");
+        btnReceive.disabled = false;
+        btnConfirm.disabled = true;
+        methodEl.disabled = false;
+      }
+      pixSection.style.display = 'none';
+    });
+
+    btnNext.addEventListener('click', () => {
+      const [, city] = clientEl.value.split(',');
+      showStatus(`Você tem mais entregas em ${city}. Veja no mapa:`, "blue");
+      mapFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(city)}&output=embed`;
+      mapSection.style.display = 'block';
+      loadNextClient();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      amountEl.value = randAmount();
+      methodEl.disabled = true;
+      btnConfirm.disabled = true;
+      btnNext.style.display = 'none';
+      showStatus(`Bem-vindo, ${collaborator}! Selecione o cliente e clique em Receber.`, "blue");
+    });
+  </script>
+</body>
+</html>

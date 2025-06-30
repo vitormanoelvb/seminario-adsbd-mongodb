@@ -1,0 +1,226 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f4f4f4;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Header fixo */
+header.main-header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 64px;
+  background: #fff;
+  display: flex; align-items: center;
+  padding: 0 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+header.main-header img.logo-img {
+  height: 48px;
+}
+header.main-header .texts {
+  margin-left: 1rem;
+}
+header.main-header h1 {
+  font-size: 1.5rem; color: #007acc;
+}
+header.main-header small {
+  display: block; font-size: 1rem; color: #555;
+}
+
+/* Nav principal */
+nav.main-nav {
+  position: fixed;
+  top: 64px; left: 0;
+  width: 100%;
+  background: #007acc;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  z-index: 99;
+}
+nav.main-nav a {
+  color: #fff;
+  margin: 0 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+nav.main-nav a.active,
+nav.main-nav a:hover {
+  background: #005fa3;
+}
+
+/* Sidebar off-canvas */
+aside#sidebar {
+  position: fixed; top: 0; left: -220px;
+  width: 220px; height: 100%;
+  background: #007acc;
+  padding-top: 80px; /* header (64) + nav (16) */
+  transition: left 0.3s;
+  z-index: 90;
+}
+aside#sidebar.open {
+  left: 0;
+}
+aside#sidebar a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #fff;
+}
+aside#sidebar a.active,
+aside#sidebar a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Toggles */
+#toggleSidebar,
+#themeSwitch {
+  position: fixed; top: 16px;
+  background: none; border: none;
+  font-size: 1.5rem; color: #333;
+  cursor: pointer; z-index: 110;
+}
+#toggleSidebar { left: 16px; }
+#themeSwitch    { left: 56px; }
+
+/* Main content */
+main {
+  margin: 124px auto 0; /* header + nav */
+  padding: 1rem;
+  max-width: 1200px;
+}
+
+/* KPI + Feed container */
+.kpi-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Grid de KPI cards */
+.kpi-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+.kpi-card {
+  background: #fff;
+  padding: 0.75rem;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.kpi-card h4 {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+.kpi-card p {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0;
+}
+
+/* Destaque de anomalias */
+.kpi-card .anomaly {
+  color: #C0392B;
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+/* Cores para valores acumulados */
+.kpi-card .accumulated.general    { color: #2980B9; }
+.kpi-card .accumulated.physical   { color: #27AE60; }
+.kpi-card .accumulated.ecommerce  { color: #1ABC9C; }
+.kpi-card .accumulated.zettamarket   { color: #3498DB; }
+.kpi-card .accumulated.zettapayments { color: #9B59B6; }
+
+/* Feed Recentes */
+.feed-box {
+  background: #fff;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+.feed-box h3 {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.6rem;
+}
+ul.feed-list {
+  list-style: none;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+ul.feed-list li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+/* Tabela de Recebimentos */
+.table-box h3 {
+  margin-bottom: 0.5rem;
+}
+.table-box table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+.table-box th, .table-box td {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 0.9rem;
+}
+.table-box th {
+  background: #007acc;
+  color: #fff;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #007acc;
+  color: #fff;
+  margin-top: 2rem;
+}
+
+/* Pulse keyframes */
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.1); }
+}
+
+/* Dark mode */
+body.dark {
+  background: #2C3E50;
+  color: #ddd;
+}
+body.dark header.main-header   { background: #1B2838; }
+body.dark nav.main-nav         { background: #0B6A9E; }
+body.dark aside#sidebar        { background: #1B2838; }
+body.dark .kpi-card,
+body.dark .feed-box,
+body.dark .table-box table    { background: #3C4A56; color: #eee; }
+body.dark .table-box th        { background: #27AE60; }

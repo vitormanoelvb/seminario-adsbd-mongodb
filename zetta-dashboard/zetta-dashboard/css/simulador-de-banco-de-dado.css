@@ -1,0 +1,83 @@
+/* Ajusta logo no header */
+.main-header .logo-img {
+  content: url('../assets/logo-simulador.png');
+  height: 110px;
+  width: auto;
+}
+
+/* Comparador custom */
+.compare-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+#result-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+#result-table th,
+#result-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+#result-table th {
+  background: #f4f4f4;
+  text-align: left;
+}
+
+.negative { color: #dc3545; }
+.positive { color: #28a745; }
+
+/* Radar */
+.radar-container { text-align: center; }
+.radar-mongo {
+  fill: rgba(39,174,96,0.3);
+  stroke: #27AE60;
+  stroke-width: 2;
+}
+.radar-custom {
+  fill: rgba(41,128,185,0.3);
+  stroke: #2980B9;
+  stroke-width: 2;
+}
+
+/* Legenda do radar */
+.radar-legend {
+  margin-top: 0.5rem;
+  text-align: left;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+.legend-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 0.5rem;
+  border: 1px solid transparent;
+}
+.legend-color.mongo { background: rgba(39,174,96,0.7); border-color: #27AE60; }
+.legend-color.custom { background: rgba(41,128,185,0.7); border-color: #2980B9; }
+
+/* Seletor de abas */
+.section-nav {
+  display: flex;
+  background: #34495E;
+}
+.section-nav a {
+  flex: 1;
+  padding: .75rem;
+  text-align: center;
+  color: #FFF;
+  text-decoration: none;
+  transition: background .3s;
+}
+.section-nav a.active { background: #1ABC9C; }
+
+/* Visibilidade de seções */
+section { display: none; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; }
+section.active { display: block; opacity: 1; transform: translateY(0); }

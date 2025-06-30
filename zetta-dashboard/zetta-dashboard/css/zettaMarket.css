@@ -1,0 +1,121 @@
+/* zettaMarket.css – estilos específicos de ZettaMarket */
+
+/* Seletor de região e ações de relatório */
+.region-select {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.region-select label {
+  font-weight: bold;
+}
+/* Ajusta a logo para usar o ícone enviado e deixa-a maior */
+.main-header .logo-img {
+  content: url('../assets/ZettaMerket.png'); /* caminho da imagem do ícone */
+  height: 100px;      /* aumentar para 100px de altura */
+  width: auto;        /* manter proporção */
+}
+.report-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+.report-actions button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+#btnPrint { background: #28a745; color: #fff; }
+#btnExport { background: #007acc; color: #fff; }
+
+/* Grid de KPIs */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.kpi {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.kpi h3 {
+  font-size: 1rem; color: #555; margin-bottom: .5rem;
+}
+.kpi p {
+  font-size: 1.5rem; font-weight: bold;
+}
+
+/* Tabela de perdas por setor */
+table#sectorTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-bottom: 1rem;
+}
+table#sectorTable th,
+table#sectorTable td {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 0.9rem;
+}
+table#sectorTable th {
+  background: #007acc;
+  color: #fff;
+}
+
+/* Ofertas e alertas lado a lado */
+.alerts-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.offer-suggestions,
+.expiry-alerts {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  flex: 1;
+}
+.offer-suggestions h3,
+.expiry-alerts h3 {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+.offer-suggestions ul,
+.expiry-alerts ul {
+  list-style: none;
+  padding-left: 0;
+}
+.offer-suggestions li,
+.expiry-alerts li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+/* Classe para piscar alerta */
+.blink {
+  animation: blinkAnim 1s infinite;
+}
+@keyframes blinkAnim {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .region-select { flex-direction: column; }
+  .alerts-row { flex-direction: column; }
+}

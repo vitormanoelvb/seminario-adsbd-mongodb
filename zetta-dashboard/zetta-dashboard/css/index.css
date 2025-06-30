@@ -1,0 +1,197 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Garante 100% de altura para centralização do login */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f4f4;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ===== Modal de Login totalmente centralizado ===== */
+#loginModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1010;
+}
+#loginModal .box {
+  width: 90%;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Header e Nav */
+header.main-header {
+  background: #2C3E50;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.logo-img {
+  height: 120px;  /* Aumentado conforme solicitado */
+  width: auto;
+}
+header .texts h1 {
+  margin-bottom: 0.25rem;
+}
+header .texts small {
+  color: #fff;    /* Texto em branco conforme solicitado */
+  font-size: 0.85rem;
+}
+
+nav.main-nav {
+  background: #0078D4;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+nav.main-nav a {
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+nav.main-nav a.active,
+nav.main-nav a:hover {
+  background: #005A9E;
+}
+
+/* Sidebar */
+#sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: #34495E;
+  padding-top: 4rem;
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+  z-index: 1000;
+}
+#sidebar.open { transform: translateX(0); }
+#sidebar a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #fff;
+}
+#sidebar a.active,
+#sidebar a:hover {
+  background: #1ABC9C;
+}
+
+/* Spinner de carregamento */
+#loadingSpinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+/* Container geral: cards + feed */
+.kpi-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  align-items: start;
+  margin: 1.5rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Grid de cartões */
+.kpi-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+/* Estilo de cada cartão */
+.kpi-card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.75rem;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.kpi-card h4 {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+.kpi-card p {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Destaque de anomalias */
+.kpi-card .anomaly {
+  color: #C0392B;
+  animation: pulse 0.8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.1); }
+}
+
+/* Cores para valores acumulados */
+.kpi-card .accumulated.general       { color: #2980B9; }
+.kpi-card .accumulated.physical      { color: #27AE60; }
+.kpi-card .accumulated.ecommerce     { color: #1ABC9C; }
+.kpi-card .accumulated.zettamarket   { color: #3498DB; }
+.kpi-card .accumulated.zettapayments { color: #9B59B6; }
+
+/* Feed box */
+.feed-box {
+  background: #fff;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+.feed-box h3 {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.6rem;
+}
+.feed-box ul {
+  list-style: none;
+  flex: 1;
+  overflow-y: auto;
+}
+.feed-box li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  background: #2C3E50;
+  color: #fff;
+}

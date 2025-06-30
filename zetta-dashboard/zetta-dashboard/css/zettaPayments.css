@@ -1,0 +1,96 @@
+/* zettaPayments.css – estilos específicos para ZettaPayments */
+
+/* QR e branch selector */
+.qr-section {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.qr-section h3 {
+  margin-bottom: .5rem;
+  color: #007acc;
+}
+#qrContainer { display: inline-block; }
+
+/* Branch & PDV status */
+.branch-select {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.branch-select label {
+  font-weight: bold;
+}
+/* Ajusta a logo para usar o ícone enviado e deixa-a maior */
+.main-header .logo-img {
+  content: url('../assets/ZettaPayments.png'); /* caminho da imagem do ícone */
+  height: 110px;      /* aumentar para 100px de altura */
+  width: auto;        /* manter proporção */
+}
+.pdv-status {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.pdv-status .pdv {
+  background: #fff;
+  padding: .75rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  text-align: center;
+  flex: 1;
+}
+.pdv-status .pdv h4 {
+  font-size: .9rem; color: #555; margin-bottom:.3rem;
+}
+.pdv-status .pdv p {
+  font-size: 1.2rem; font-weight:bold;
+}
+
+/* KPI grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+.kpi {
+  background: #fff;
+  padding: .75rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.kpi h3 {
+  font-size: .9rem; color: #555; margin-bottom:.5rem;
+}
+.kpi p {
+  font-size: 1.4rem; font-weight:bold;
+}
+
+/* Status badges coloridos */
+.status-ok       { display:inline-block; width:10px; height:10px; background:#28a745; border-radius:50%; }
+.status-pending  { display:inline-block; width:10px; height:10px; background:#ffc107; border-radius:50%; }
+.status-denied   { display:inline-block; width:10px; height:10px; background:#dc3545; border-radius:50%; }
+.status-fraud    { display:inline-block; width:10px; height:10px; background:#6f42c1; border-radius:50%; }
+
+/* Feed & AI suggestions */
+.feed-section, .ai-section {
+  margin-bottom: 1rem;
+}
+.feed-section h3, .ai-section h3 {
+  margin-bottom:.5rem; color:#007acc;
+}
+.feed-section ul, .ai-section ul {
+  list-style: none; max-height:150px; overflow-y:auto; padding-left:0;
+}
+.feed-section li, .ai-section li {
+  background:#fff; padding:.5rem; border-bottom:1px solid #eee; font-size:.85rem;
+}
+.blink {
+  animation: blinkAnim 1s infinite;
+}
+@keyframes blinkAnim {
+  0%,50%,100% { opacity:1; }
+  25%,75%     { opacity:0; }
+}

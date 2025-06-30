@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Comparativo Avançado de Bancos de Dados</title>
+
+  <!-- FontAwesome para ícones -->
+  <script src="https://kit.fontawesome.com/SEU_KIT.js" crossorigin="anonymous"></script>
+  <!-- Tippy.js for tooltips -->
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <!-- jsPDF & SheetJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <style>
+    /* ==== SEU CSS ORIGINAL ==== */
+/* Ajusta a logo para usar o ícone enviado e deixa-a maior */
+.main-header .logo-img {
+  content: url('../assets/logo-simulador.png'); /* caminho da imagem do ícone */
+  height: 100px;      /* aumentar para 100px de altura */
+  width: auto;        /* manter proporção */
+}
+.compare-container {
+  display: flex;/* Ajusta a logo para usar o ícone enviado e deixa-a maior */
+.main-header .logo-img {
+  content: url('../assets/ZettaMerket.png'); /* caminho da imagem do ícone */
+  height: 100px;      /* aumentar para 100px de altura */
+  width: auto;        /* manter proporção */
+}
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+#result-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+#result-table th,
+#result-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+#result-table th {
+  background: #f4f4f4;
+  text-align: left;
+}
+
+.negative { color: #dc3545; /* vermelho */ }
+.positive { color: #28a745; /* verde */ }
+
+/* Radar */
+.radar-container {
+  text-align: center;
+}
+.radar-mongo {
+  fill: rgba(39,174,96,0.3);
+  stroke: #27AE60;
+  stroke-width: 2;
+}
+.radar-custom {
+  fill: rgba(41,128,185,0.3);
+  stroke: #2980B9;
+  stroke-width: 2;
+}
+
+/* Legenda */
+.radar-legend {
+  margin-top: 0.5rem;
+  text-align: left;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+.legend-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 0.5rem;
+  border: 1px solid transparent;
+}
+.legend-color.mongo {
+  background: rgba(39,174,96,0.7);
+  border-color: #27AE60;
+}
+.legend-color.custom {
+  background: rgba(41,128,185,0.7);
+  border-color: #2980B9;
+}
+
+   .negative {
+  color: #dc3545; /* vermelho */
+}
+.positive {
+  color: #28a745; /* verde */
+}
+/* adicionar ao seu style.css */
+.negative { color: #dc3545; }  /* vermelho */
+.positive { color: #28a745; }  /* verde */
+
+/* estilos para os polígonos do radar */
+.radar-mongo {
+  fill: rgba(39,174,96,0.3);
+  stroke: #27AE60;
+  stroke-width: 2;
+}
+.radar-custom {
+  fill: rgba(41,128,185,0.3);
+  stroke: #2980B9;
+  stroke-width: 2;
+}
+
+
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Arial,sans-serif; background:#f4f4f4; color:#333; transition: background .3s, color .3s; }
+    header { background:#2C3E50; color:#FFF; padding:1rem; text-align:center; position:relative; }
+    #toggle-theme { position:absolute; top:1rem; right:1rem; padding:.5rem; background:#FFF; border:none; border-radius:4px; cursor:pointer; }
+
+    /* MENU PRINCIPAL */
+    .main-nav { background:#0078D4; display:flex; gap:1rem; padding:0.5rem; justify-content:center; }
+    .main-nav a { color:#FFF; text-decoration:none; padding:.5rem 1rem; }
+    .main-nav a.active { background:#005A9E; border-radius:4px; }
+
+    /* BUSCA GLOBAL */
+    #global-search { width:100%; padding:.5rem; margin:1rem 0; border:1px solid #ccc; border-radius:4px; }
+
+    /* NAV DE ABAS INTERNAS */
+    .section-nav { background:#34495E; display:flex; flex-wrap:wrap; }
+    .section-nav a { flex:1 1 14%; margin:2px; padding:.75rem; text-align:center; color:#FFF; text-decoration:none; font-size:.9rem; transition:background .3s; }
+    .section-nav a.active { background:#1ABC9C; }
+
+    main { padding:2rem; }
+    section { display:none; opacity:0; transform:translateY(10px); transition:opacity .3s, transform .3s; }
+    section.active { display:block; opacity:1; transform:translateY(0); }
+    h2 { color:#1ABC9C; border-bottom:2px solid #1ABC9C; margin-bottom:1rem; }
+    .section-desc { font-style:italic; margin-bottom:1rem; }
+    .db-block, .compare-block { background:#FFF; padding:1rem; margin:1rem 0; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,.1); }
+    .adv-disv { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+    .adv-disv > div { background:#ecf0f1; padding:.75rem; border-radius:4px; }
+    .vant { border-left:5px solid #27AE60; }
+    .desv { border-left:5px solid #C0392B; }
+    dl, dt, dd { margin-bottom:.5rem; }
+    .badge { display:inline-block; padding:2px 6px; border-radius:12px; color:#FFF; font-size:.75rem; margin-left:.5rem; vertical-align:middle; }
+    .badge.M1 { background:#D35400; } .badge.M2 { background:#F39C12; }
+    .badge.M3 { background:#27AE60; } .badge.M4 { background:#2ECC71; } .badge.M5 { background:#1ABC9C; }
+    ul { margin-left:1.25rem; margin-bottom:1rem; }
+    li { margin-bottom:.25rem; }
+    .sparkline { font-size:.7rem; color:#2980B9; margin-left:.5rem; display:inline-block; }
+    code { background:#eee; padding:2px 4px; border-radius:4px; }
+/* Tabela comparativa Aba 3 */
+table {
+  width:100%;
+  border-collapse:collapse;
+  margin:1rem 0;
+  font-size:.85rem;
+}
+th, td {
+  border:1px solid #ccc;
+  padding:.5rem;
+  text-align:center;
+}
+th {
+  background:#1ABC9C;
+  color:#FFF;
+  cursor:pointer;
+  position:relative;
+}
+tr:nth-child(even) {
+  background:#f9f9f9;
+}
+tr.benchmark::after {
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  border-left:2px dashed #E67E22;
+  transform:translateX(-50%);
+}
+
+/* Linhas de projeto */
+.proj-row-1 { background:#DDEBF7; }
+.proj-row-2 { background:#E2EFDA; }
+.proj-row-3 { background:#FFF2CC; }
+.proj-row-4 { background:#FCE4D6; }
+
+/* Mini-barras de benchmark */
+.bar-container {
+  width:100px;
+  background:#eee;
+  border-radius:4px;
+  margin:auto;
+  position:relative;
+}
+.bar-container::before {
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  border-left:1px dashed #E67E22;
+}
+.bar {
+  height:8px;
+  background:#1ABC9C;
+  border-radius:4px;
+}
+
+/* Sparklines inline (caso usadas em texto) */
+.sparkline {
+  font-size:.7rem;
+  color:#2980B9;
+  margin-left:.5rem;
+  display:inline-block;
+}
+
+
+    .best { background:#27AE60; color:#FFF; padding:2px 6px; border-radius:4px; }
+    .weak { background:#C0392B; color:#FFF; padding:2px 6px; border-radius:4px; }
+
+    details { margin:1rem 0; }
+    summary { font-weight:bold; cursor:pointer; }
+
+    /* Dark Mode */
+    .dark-mode body { background:#2C3E50; color:#ECECEC; }
+    .dark-mode header { background:#1B2838; color:#DDD; }
+    .dark-mode .main-nav { background:#0B6A9E; }
+    .dark-mode .main-nav a.active { background:#005A9E; }
+    .dark-mode .section-nav { background:#1B2838; }
+    .dark-mode .section-nav a.active { background:#27AE60; }
+    .dark-mode .db-block, .dark-mode .compare-block, .dark-mode table, .dark-mode dl { background:#3C4A56; color:#EEE; }
+    .dark-mode th { background:#27AE60; color:#FFF; }
+    .dark-mode .sparkline { color:#7FB3D5; }
+/* CSS: adicione no seu style.css */
+
+.compare-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+#result-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+#result-table th,
+#result-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+#result-table th {
+  background: #f4f4f4;
+  text-align: left;
+}
+
+.negative { color: #dc3545; /* vermelho */ }
+.positive { color: #28a745; /* verde */ }
+
+/* Radar */
+.radar-container {
+  text-align: center;
+}
+.radar-mongo {
+  fill: rgba(39,174,96,0.3);
+  stroke: #27AE60;
+  stroke-width: 2;
+}
+.radar-custom {
+  fill: rgba(41,128,185,0.3);
+  stroke: #2980B9;
+  stroke-width: 2;
+}
+
+/* Legenda */
+.radar-legend {
+  margin-top: 0.5rem;
+  text-align: left;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+.legend-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 0.5rem;
+  border: 1px solid transparent;
+}
+.legend-color.mongo {
+  background: rgba(39,174,96,0.7);
+  border-color: #27AE60;
+}
+.legend-color.custom {
+  background: rgba(41,128,185,0.7);
+  border-color: #2980B9;
+}
+.logo-img { height:100px; margin-right:1rem; }
+/* Coloca “Pontos Negativos” e “Pontos Positivos” em preto */
+#result-table table thead th {
+  color: #000 !important;
+}
+/* Main Header com logo à esquerda e texto à direita */
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0d47a1;
+  padding: 1rem;
+  color: #fff;
+}
+.logo-img {
+  height: 50px;
+  width: auto;
+  margin-right: 1rem;
+}
+.texts {
+  flex: 1;
+  text-align: left;
+}
+/* Ajusta a logo para usar o ícone enviado e deixa-a maior */
+.main-header .logo-img {
+  content: url('../assets/logo-simulador.png'); /* caminho da imagem do ícone */
+  height: 110px;      /* aumentar para 100px de altura */
+  width: auto;        /* manter proporção */
+}
+
+
+    /* ==== FIM DO CSS ORIGINAL ==== */
+  </style>
+</head>
+<body>
+  
+
+  <!-- Header -->
+  <header class="main-header">
+  <img src="assets/logo-simulador.png" alt="logo-simulador" class="logo-img"/>
+  <div class="texts">
+    <h1>Comparativo Avançado de Bancos de Dados</h1>
+    <p>Análise completa: Loja Virtual, IA, Pagamento & Chat Real-Time</p>
+  </div>
+</header>
+
+  <!-- ===== MENU PRINCIPAL ===== -->
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="zettaMarket.html">ZettaMarket</a>
+    <a href="zettaPayments.html">ZettaPayments</a>
+    <a href="mongoDB.html">Banco de Dados</a>
+    <a href="bi.html">BI Atlas</a>
+    <a href="simulador-de-banco-de-dados.html" class="active">Comparativo de Bancos de Dados</a>
+    <a href="matriz-seguranca.html">Matriz Segurança</a>
+    <a href="atendimento_cliente.html">Atendimento</a>
+    <a href="sobre.html">Sobre Nós</a>
+  </nav>
+
+  
+  <!-- ===== NAV DE ABAS INTERNAS ===== -->
+ <nav class="section-nav">
+    <a href="#tab1" class="active">1. Detalhes por Banco de Dados</a>
+    <a href="#tab2">2. Similaridades vs Diferenças</a>
+    <a href="#tab3">3. Comparação Cruzada</a>
+    <a href="#tab4">4. Melhor Opção</a>
+    <a href="#tab5">5. Defesa do MongoDB</a>
+    <a href="#tab6">6. Comparativo Detalhado</a>
+    <a href="#tab7">7. Scoreboard & Vantagem de Custo</a>
+  </nav>
+
+  <main>
+     <!-- ABA 1 -->
+    <section id="tab1" class="active">
+      <h2>1. Detalhes por Banco de Dados</h2>
+      <p class="section-desc">
+        Cada banco avaliado em Loja Virtual, IA, Pagamento Integrado e Chat Real-Time.
+        <span class="badge M3" data-tippy-content="M3: Estágio intermediário de maturidade">M3</span>
+      </p>
+
+      <!-- SLA Comparativo -->
+      <dl>
+        <dt><strong>SLA / RTO / RPO</strong></dt>
+        <dd>MongoDB Atlas: <span class="badge" style="background:#27AE60;">99.99%</span> / RTO 1h / RPO 15m</dd>
+        <dd>RDS Multi-AZ: <span class="badge" style="background:#F39C12;">99.95%</span> / RTO 2h / RPO 30m</dd>
+        <dd>Oracle RAC: <span class="badge" style="background:#E74C3C;">99.90%</span> / RTO 4h / RPO 1h</dd>
+      </dl>
+
+      <!-- Painel MySQL -->
+      <div class="db-block">
+         <div class="db-block">
+        <h3>MySQL <span class="badge M4">M4</span></h3>
+        <div class="adv-disv">
+          <div class="vant"><strong>Vantagens:</strong>
+            <ul>
+              <li>ACID completo (InnoDB) <span class="sparkline">▂▃▅▆▇▆▅▃▂</span></li>
+              <li>JOINs e CTEs otimizados <span class="sparkline">▁▂▃▅▇▆▇▅▃</span></li>
+              <li>Ferramentas maduras (Workbench, Performance Schema) <span class="sparkline">▂▃▆▇▇▆▃▂▁</span></li>
+            </ul>
+          </div>
+          <div class="desv"><strong>Desvantagens:</strong>
+            <ul>
+              <li>DDL bloqueante em tabelas grandes <span class="sparkline">▇▆▅▃▂▂▃▅▆</span></li>
+              <li>Sharding manual e complexo <span class="sparkline">▆▅▃▃▂▂▃▅▆</span></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Cenários -->
+        <h4>Loja Virtual</h4>
+        <ul>
+          <li>✅Transações confiáveis (até 1k TPS) <span class="sparkline">▅▆▇▆▅▃▂▁</span></li>
+          <li>⚠️Esquema rígido dificulta adição rápida <span class="sparkline">▁▂▃▅▆▇▅▃</span></li>
+        </ul>
+        <h4>IA Recomendações</h4>
+        <ul>
+          <li>✅Procedures pré-calculam similaridade <span class="sparkline">▂▃▅▆▆▅▃▂</span></li>
+          <li>⚠️Ingestão massiva exige pipeline externo <span class="sparkline">▆▅▃▂▁▂▃▅</span></li>
+        </ul>
+        <h4>Pagamento Integrado</h4>
+        <ul>
+          <li>✅Rollback atômico garante consistência <span class="sparkline">▃▅▆▇▆▅▃▂</span></li>
+          <li>⚠️Locking em picos pode aumentar latência <span class="sparkline">▇▆▅▃▂▂▃▅</span></li>
+        </ul>
+        <h4>Chat Real-Time</h4>
+        <ul>
+          <li>✅Guarda histórico com consistência <span class="sparkline">▃▅▇▆▅▃▂▁</span></li>
+          <li>⚠️Não escala bem para milhares de writes/s <span class="sparkline">▁▂▃▅▇▆▅▃</span></li>
+        </ul>
+      </div>
+
+      <!-- Firebase (já completo) -->
+
+      <!-- Oracle -->
+      <div class="db-block">
+        <h3>Oracle Database <span class="badge M5">M5</span></h3>
+        <div class="adv-disv">
+          <div class="vant"><strong>Vantagens:</strong>
+            <ul>
+              <li>RAC & Data Guard HA/DR <span class="sparkline">▂▃▅▆▅▃▂▁</span></li>
+              <li>Multimodelo (JSON, XML, Gráfico) <span class="sparkline">▃▅▇▆▅▃▂▁</span></li>
+            </ul>
+          </div>
+          <div class="desv"><strong>Desvantagens:</strong>
+            <ul>
+              <li>Custo de licenciamento elevado <span class="sparkline">▇▆▅▂▁▂▅▆</span></li>
+              <li>Complexidade operacional alta <span class="sparkline">▆▅▃▂▁▂▅▆</span></li>
+            </ul>
+          </div>
+        </div>
+        <h4>Loja Virtual</h4>
+        <ul>
+          <li>✅Resiliência em picos de vendas <span class="sparkline">▅▆▇▆▅▃▂▁</span></li>
+          <li>⚠️TCO alto e overhead de gestão <span class="sparkline">▆▅▃▂▁▂▅▆</span></li>
+        </ul>
+        <h4>IA Recomendações</h4>
+        <ul>
+          <li>✅Graph para relacionamentos complexos <span class="sparkline">▂▃▅▆▇▆▅▃</span></li>
+          <li>⚠️Overkill em startups lean <span class="sparkline">▇▆▅▃▂▂▃▅</span></li>
+        </ul>
+        <h4>Pagamento Integrado</h4>
+        <ul>
+          <li>✅Flashback & FGA para auditoria <span class="sparkline">▃▅▆▇▆▅▃▂</span></li>
+          <li>⚠️Upgrades exigem downtime <span class="sparkline">▇▆▅▃▂▂▃▅</span></li>
+        </ul>
+        <h4>Chat Real-Time</h4>
+        <ul>
+          <li>✅Advanced Queuing interno <span class="sparkline">▂▃▅▇▅▃▂▁</span></li>
+          <li>⚠️Configuração pesada para chat simples <span class="sparkline">▁▂▃▅▇▆▅▃</span></li>
+        </ul>
+      </div>
+
+      <!-- SQL Server -->
+      <div class="db-block">
+        <h3>SQL Server <span class="badge M5">M5</span></h3>
+        <div class="adv-disv">
+          <div class="vant"><strong>Vantagens:</strong>
+            <ul>
+              <li>Always On AG HA <span class="sparkline">▂▃▅▆▅▃▂▁</span></li>
+              <li>BI Integrado (SSIS, SSRS, SSAS) <span class="sparkline">▃▅▇▆▅▃▂▁</span></li>
+            </ul>
+          </div>
+          <div class="desv"><strong>Desvantagens:</strong>
+            <ul>
+              <li>Licenciamento caro por core <span class="sparkline">▇▆▅▂▁▂▅▆</span></li>
+              <li>Tuning e HA complexos <span class="sparkline">▆▅▃▂▁▂▅▆</span></li>
+            </ul>
+          </div>
+        </div>
+        <h4>Loja Virtual</h4>
+        <ul>
+          <li>✅Relatórios integrados <span class="sparkline">▅▆▇▆▅▃▂▁</span></li>
+          <li>⚠️Escalar fora do Azure complexo <span class="sparkline">▆▅▃▂▁▂▅▆</span></li>
+        </ul>
+        <h4>IA Recomendações</h4>
+        <ul>
+          <li>✅T-SQL+CLR avançado <span class="sparkline">▂▃▅▆▇▆▅▃</span></li>
+          <li>⚠️Sem vetores nativo <span class="sparkline">▇▆▅▃▂▂▃▅</span></li>
+        </ul>
+        <h4>Pagamento Integrado</h4>
+        <ul>
+          <li>✅Snapshot Isolation, Always Encrypted <span class="sparkline">▃▅▆▇▆▅▃▂</span></li>
+          <li>⚠️RLS/Masking complexos <span class="sparkline">▇▆▅▃▂▂▃▅</span></li>
+        </ul>
+        <h4>Chat Real-Time</h4>
+        <ul>
+          <li>✅Service Broker & SignalR <span class="sparkline">▂▃▅▇▅▃▂▁</span></li>
+          <li>⚠️Licensing em alta escala <span class="sparkline">▁▂▃▅▇▆▅▃</span></li>
+        </ul>
+      </div>
+
+      <!-- MongoDB -->
+      <div class="db-block">
+        <h3>MongoDB <span class="badge M5">M5</span></h3>
+        <div class="adv-disv">
+          <div class="vant"><strong>Vantagens:</strong>
+            <ul>
+              <li>Esquema flexível <span class="sparkline">▂▃▅▆▇▆▅▃▂</span></li>
+              <li>Sharding automático <span class="sparkline">▁▂▃▅▇▆▇▅▃</span></li>
+              <li>Replica sets rápidos <span class="sparkline">▂▃▆▇▇▆▃▂▁</span></li>
+            </ul>
+          </div>
+          <div class="desv"><strong>Desvantagens:</strong>
+            <ul>
+              <li>Joins via $lookup lentos <span class="sparkline">▇▆▅▃▂▂▃▅▆</span></li>
+              <li>BSON overhead ~15% <span class="sparkline">▆▅▃▃▂▂▃▅▆</span></li>
+            </ul>
+          </div>
+        </div>
+        <h4>Loja Virtual</h4>
+        <ul>
+          <li>✅Evolução sem downtime <span class="sparkline">▅▆▇▆▅▃▂▁</span></li>
+          <li>⚠️ACID em estoque exige tuning <span class="sparkline">▁▂▃▅▆▇▅▃</span></li>
+        </ul>
+        <h4>IA Recomendações</h4>
+        <ul>
+          <li>✅Ingestão streaming 50k+/s <span class="sparkline">▂▃▅▆▆▅▃▂</span></li>
+          <li>⚠️Embeddings em DB vetorial <span class="sparkline">▆▅▃▂▁▂▃▅</span></li>
+        </ul>
+        <h4>Pagamento Integrado</h4>
+        <ul>
+          <li>✅Transações v4+ <span class="sparkline">▃▅▆▇▆▅▃▂</span></li>
+          <li>⚠️Sem FK nativo <span class="sparkline">▇▆▅▃▂▂▃▅</span></li>
+        </ul>
+        <h4>Chat Real-Time</h4>
+        <ul>
+          <li>✅Change Streams + Realm Sync <span class="sparkline">▂▃▅▇▅▃▂▁</span></li>
+          <li>⚠️Presença melhora com Redis <span class="sparkline">▁▂▃▅▇▆▅▃</span></li>
+        </ul>
+      </div>
+
+      <!-- PostgreSQL -->
+      <div class="db-block">
+        <h3>PostgreSQL <span class="badge M4">M4</span></h3>
+        <div class="adv-disv">
+          <div class="vant"><strong>Vantagens:</strong>
+            <ul>
+              <li>CTEs, Window Functions <span class="sparkline">▂▃▅▆▇▆▅▃▂</span></li>
+              <li>JSONB + pgvector <span class="sparkline">▁▂▃▅▇▆▇▅▃</span></li>
+              <li>MVCC sem locks de leitura <span class="sparkline">▂▃▆▇▇▆▃▂▁</span></li>
+            </ul>
+          </div>
+          <div class="desv"><strong>Desvantagens:</strong>
+            <ul>
+              <li>Sharding via Citus externo <span class="sparkline">▇▆▅▃▂▂▃▅▆</span></li>
+              <li>Monitoração de VACUUM necessária <span class="sparkline">▆▅▃▃▂▂▃▅▆</span></li>
+            </ul>
+          </div>
+        </div>
+        <h4>Loja Virtual</h4>
+        <ul>
+          <li>✅Atributos flexíveis JSONB <span class="sparkline">▅▆▇▆▅▃▂▁</span></li>
+          <li>⚠️Reindexação JSONB consome I/O <span class="sparkline">▁▂▃▅▆▇▅▃</span></li>
+        </ul>
+        <h4>IA Recomendações</h4>
+        <ul>
+          <li>✅pgvector k-NN in-DB <span class="sparkline">▂▃▅▆▆▅▃▂</span></li>
+          <li>⚠️Indexação vetorial extenso <span class="sparkline">▆▅▃▂▁▂▃▅</span></li>
+        </ul>
+        <h4>Pagamento Integrado</h4>
+        <ul>
+          <li>✅Serializable + sync repl <span class="sparkline">▃▅▆▇▆▅▃▂</span></li>
+          <li>⚠️WAL latency em picos <span class="sparkline">▇▆▅▃▂▂▃▅</span></li>
+        </ul>
+        <h4>Chat Real-Time</h4>
+        <ul>
+          <li>✅LISTEN/NOTIFY leve <span class="sparkline">▂▃▅▇▅▃▂▁</span></li>
+          <li>⚠️Não compete com Redis em carga alta <span class="sparkline">▁▂▃▅▇▆▅▃</span></li>
+        </ul>
+      </div>
+
+      <!-- ZODB -->
+      <div class="db-block">
+        <h3>ZODB <span class="badge M2">M2</span></h3>
+        <div class="adv-disv">
+          <div class="vant"><strong>Vantagens:</strong>
+            <ul>
+              <li>Persistência transparente objetos Python <span class="sparkline">▂▃▅▆▇▆▅▃▂</span></li>
+              <li>Versioning e Undo nativos <span class="sparkline">▁▂▃▅▇▆▇▅▃</span></li>
+            </ul>
+          </div>
+          <div class="desv"><strong>Desvantagens:</strong>
+            <ul>
+              <li>Escalabilidade limitada <span class="sparkline">▇▆▅▃▂▂▃▅▆</span></li>
+              <li>Ecosistema restrito a Zope/Plone <span class="sparkline">▆▅▃▃▂▂▃▅▆</span></li>
+            </ul>
+          </div>
+        </div>
+        <h4>Loja Virtual</h4>
+        <ul>
+          <li>✅Excelente para CMS estático <span class="sparkline">▅▆▇▆▅▃▂▁</span></li>
+          <li>⚠️Não recomendado para alto volume <span class="sparkline">▁▂▃▅▆▇▅▃</span></li>
+        </ul>
+        <h4>IA Recomendações</h4>
+        <ul>
+          <li>🚫Sem analytics massivo <span class="sparkline">▇▆▅▃▂▂▃▅▆</span></li>
+        </ul>
+        <h4>Pagamento Integrado</h4>
+        <ul>
+          <li>🚫Falta transações relacionais <span class="sparkline">▇▆▅▃▂▂▃▅▆</span></li>
+        </ul>
+        <h4>Chat Real-Time</h4>
+        <ul>
+          <li>✅Versioning conversas útil <span class="sparkline">▂▃▅▆▇▆▅▃▂</span></li>
+          <li>⚠️Performance cai em alta conc. <span class="sparkline">▁▂▃▅▇▆▅▃</span></li>
+        </ul>
+      </div>
+    </section>
+    <!-- ABA 2 -->
+    <section id="tab2">
+      <h2>2. Similaridades vs Diferenças – Temas DBA</h2>
+      <p class="section-desc">Cobertura dos 10 temas-chave e destaque de onde MongoDB brilha.</p>
+
+      <!-- filtros -->
+      <div style="margin-bottom:1rem;">
+        <label><input type="checkbox" class="theme-filter" data-target="Modelagem" checked /> Modelagem</label>
+        <label><input type="checkbox" class="theme-filter" data-target="Linguagens" checked /> Consultas</label>
+        <label><input type="checkbox" class="theme-filter" data-target="Transacoes" checked /> Transações</label>
+        <label><input type="checkbox" class="theme-filter" data-target="Desempenho" checked /> Desempenho</label>
+        <label><input type="checkbox" class="theme-filter" data-target="AltaDisp" checked /> Alta Disp.</label>
+        <label><input type="checkbox" class="theme-filter" data-target="Backup" checked /> Backup</label>
+        <label><input type="checkbox" class="theme-filter" data-target="Seguranca" checked /> Segurança</label>
+        <label><input type="checkbox" class="theme-filter" data-target="Integracao" checked /> Integração</label>
+        <label><input type="checkbox" class="theme-filter" data-target="Monitor" checked /> Monitoramento</label>
+        <label><input type="checkbox" class="theme-filter" data-target="Trends" checked /> Tendências</label>
+      </div>
+
+      <!-- 1. Modelagem -->
+      <div class="compare-block theme-block Modelagem">
+        <h3 style="background:#2E86C1;color:#FFF;padding:.5rem;border-radius:4px;">1. Modelagem de Dados</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Aspecto</th>
+              <th style="background:rgba(46,134,193,0.2);">Relacional</th>
+              <th style="background:rgba(39,174,96,0.2);">NoSQL Doc</th>
+              <th style="background:rgba(230,126,34,0.2);">Objeto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Entidades & Relacionamentos</td>
+              <td>ER forte ✅</td>
+              <td style="background:rgba(39,174,96,0.1);">Referências dinâmicas ✅</td>
+              <td>Classes Python ✅</td>
+            </tr>
+            <tr>
+              <td>Normalização vs Denormalização</td>
+              <td>Alta ✅</td>
+              <td style="background:rgba(192,57,43,0.1);">Denormalização ⚠️</td>
+              <td>N/A —</td>
+            </tr>
+            <tr>
+              <td>Modelagem Dimensional</td>
+              <td>Star/Snowflake ✅</td>
+              <td style="background:rgba(192,57,43,0.1);">Não típico ⚠️</td>
+              <td>N/A —</td>
+            </tr>
+            <tr>
+              <td>JSON/BSON</td>
+              <td>N/A —</td>
+              <td style="background:rgba(39,174,96,0.1);">Nativo, flexível ✅</td>
+              <td>N/A —</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2. Linguagens -->
+      <div class="compare-block theme-block Linguagens">
+        <h3 style="background:#AF7AC5;color:#FFF;padding:.5rem;border-radius:4px;">2. Linguagens de Consulta</h3>
+        <ul>
+          <li>SQL (DDL/DML/DCL, procs, triggers) ✅</li>
+          <li>NoSQL DSL (<code>find()/aggregate()</code>) ✅</li>
+          <li>Graph (Cypher, $graphLookup) ❔</li>
+        </ul>
+      </div>
+
+      <!-- 3. Transações -->
+      <div class="compare-block theme-block Transacoes">
+        <h3 style="background:#E67E22;color:#FFF;padding:.5rem;border-radius:4px;">3. Transações & Consistência</h3>
+        <ul>
+          <li>ACID vs BASE: RDBMS ACID ✅; MongoDB ACID v4+ ✅; Firebase eventual ⚠️</li>
+          <li>Isolamento: SERIALIZABLE → READ COMMITTED vs MVCC vs otimista</li>
+          <li>Write/Read Concern: MongoDB granular ✅; N/A em RDBMS</li>
+          <li>Concorrência: Locks vs MVCC vs otimista</li>
+        </ul>
+      </div>
+
+      <!-- 4. Desempenho -->
+      <div class="compare-block theme-block Desempenho">
+        <h3 style="background:#17A589;color:#FFF;padding:.5rem;border-radius:4px;">4. Desempenho & Indexação</h3>
+        <ul>
+          <li>B-Tree (todos), Hash (MongoDB) ✅, GiST/GIN (PG), Bitmap (Oracle), TTL (MongoDB) ✅</li>
+          <li>Explain: EXPLAIN vs mongostat vs AWR</li>
+          <li>Cache: query cache vs buffer pool vs WiredTiger</li>
+        </ul>
+      </div>
+
+      <!-- 5. Alta Disponibilidade -->
+      <div class="compare-block theme-block AltaDisp">
+        <h3 style="background:#239B56;color:#FFF;padding:.5rem;border-radius:4px;">5. Alta Disponibilidade & Escalabilidade</h3>
+        <ul>
+          <li>Replica Sets vs Prim-Rep vs Master-Slave vs ZEO</li>
+          <li>Sharding: MongoDB automático ✅ vs MySQL manual ⚠️ vs Citus externo ⚠️</li>
+          <li>Failover: MongoDB nativo ✅ vs configuração em RDBMS ⚠️</li>
+        </ul>
+      </div>
+
+      <!-- 6. Backup -->
+      <div class="compare-block theme-block Backup">
+        <h3 style="background:#D68910;color:#FFF;padding:.5rem;border-radius:4px;">6. Backup, Restore & Recuperação</h3>
+        <ul>
+          <li>mysqldump/pg_dump/mongodump; RMAN; Atlas snapshots ✅</li>
+          <li>PITR: binlog vs WAL vs Oplog retention ✅</li>
+        </ul>
+      </div>
+
+      <!-- 7. Segurança -->
+      <div class="compare-block theme-block Seguranca">
+        <h3 style="background:#CD6155;color:#FFF;padding:.5rem;border-radius:4px;">7. Segurança & Governança</h3>
+        <ul>
+          <li>Auth: LDAP/SCRAM/x.509; Roles; VPD; Rules</li>
+          <li>Cripto: TLS (todos) ✅; TDE (MongoDB Ent., Oracle) ✅</li>
+          <li>Auditoria: audit plugins; pgAudit; Cloud Audit</li>
+        </ul>
+      </div>
+
+      <!-- 8. Integração -->
+      <div class="compare-block theme-block Integracao">
+        <h3 style="background:#2C3E50;color:#FFF;padding:.5rem;border-radius:4px;">8. Integração de Dados</h3>
+        <ul>
+          <li>ETL/ELT: SSIS/Talend (Rel.) ⚠️ vs Cloud Functions (Firebase) ⚠️ vs Kafka Connect (MongoDB) ✅</li>
+          <li>CDC: Debezium (RDBMS) ⚠️ vs Change Streams (MongoDB) ✅ vs GoldenGate (Oracle)</li>
+          <li>Conectores: ODBC/JDBC vs BI Connector vs RelStorage</li>
+        </ul>
+      </div>
+
+      <!-- 9. Monitoramento -->
+      <div class="compare-block theme-block Monitor">
+        <h3 style="background:#1F618D;color:#FFF;padding:.5rem;border-radius:4px;">9. Monitoramento & Operações</h3>
+        <ul>
+          <li>Métricas: Performance Schema vs mongostat ✅ vs pg_stat_statements</li>
+          <li>Alertas: Prometheus/Grafana vs Atlas Alerts ✅ vs Cloud Monitoring</li>
+          <li>Tuning SO: I/O scheduler; locks; thread pools</li>
+        </ul>
+      </div>
+
+      <!-- 10. Tendências -->
+      <div class="compare-block theme-block Trends">
+        <h3 style="background:#7D3C98;color:#FFF;padding:.5rem;border-radius:4px;">10. Tendências & Arquiteturas Modernas</h3>
+        <ul>
+          <li>CAP Theorem: trade-offs conscientes</li>
+          <li>HTAP/NewSQL: Postgres-FDW vs Cosmos Hyperscale vs Spanner</li>
+          <li>Serverless/DBaaS: Atlas ✅, Firebase ✅, Aurora vs Spanner</li>
+          <li>Data Mesh & Lakehouse: Delta Lake, Iceberg</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ABA 3 -->
+    <section id="tab3">
+      <h2>3. Comparação Cruzada por Projeto</h2>
+      <p class="section-desc">Trade-offs detalhados com mini-barras, linha de benchmark e colunas ordenáveis.</p>
+      <table id="cross-table">
+        <thead>
+          <tr>
+            <th data-col="Banco">Projeto/Banco ▲▼</th>
+            <th data-col="MySQL">MySQL ▲▼</th>
+            <th data-col="Firebase">Firebase ▲▼</th>
+            <th data-col="Oracle">Oracle ▲▼</th>
+            <th data-col="SQLServer">SQL Server ▲▼</th>
+            <th data-col="MongoDB">MongoDB ▲▼</th>
+            <th data-col="PostgreSQL">PostgreSQL ▲▼</th>
+            <th data-col="ZODB">ZODB ▲▼</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="proj-row-1">
+            <td>Loja Virtual</td>
+            <td class="benchmark">ACID<div class="bar-container"><div class="bar" style="width:85%"></div></div></td>
+            <td>Offline<div class="bar-container"><div class="bar" style="width:80%"></div></div></td>
+            <td>HA<div class="bar-container"><div class="bar" style="width:70%"></div></div></td>
+            <td>BI<div class="bar-container"><div class="bar" style="width:75%"></div></div></td>
+            <td><span class="best">Escala</span><div class="bar-container"><div class="bar" style="width:95%"></div></div></td>
+            <td>FlexJSON<div class="bar-container"><div class="bar" style="width:85%"></div></div></td>
+            <td>CMS<div class="bar-container"><div class="bar" style="width:60%"></div></div></td>
+          </tr>
+          <tr class="proj-row-2">
+            <td>IA Recomendações <button class="expand-btn" data-target="ia-log">+</button></td>
+            <td>Procs<div class="bar-container"><div class="bar" style="width:70%"></div></div></td>
+            <td>Events<div class="bar-container"><div class="bar" style="width:80%"></div></div></td>
+            <td>Graph<div class="bar-container"><div class="bar" style="width:75%"></div></div></td>
+            <td>CTE<div class="bar-container"><div class="bar" style="width:80%"></div></div></td>
+            <td><span class="best">AggrPipeline</span><div class="bar-container"><div class="bar" style="width:90%"></div></div></td>
+            <td>pgvector<div class="bar-container"><div class="bar" style="width:85%"></div></div></td>
+            <td>—<div class="bar-container"><div class="bar" style="width:30%"></div></div></td>
+          </tr>
+          <!-- Linha de expansão IA -->
+          <tr id="ia-log" style="display:none;">
+            <td colspan="8" style="text-align:left; background:#ecf0f1;">
+              <strong>Logs de benchmark:</strong> Ingestão 50k evt/s, latência média 8ms, 99º percentil 15ms.
+            </td>
+          </tr>
+          <tr class="proj-row-3">
+            <td>Pagamento Integrado</td>
+            <td>ACID<div class="bar-container"><div class="bar" style="width:90%"></div></div></td>
+            <td>Status<div class="bar-container"><div class="bar" style="width:60%"></div></div></td>
+            <td>Flashback<div class="bar-container"><div class="bar" style="width:95%"></div></div></td>
+            <td>Snapshot<div class="bar-container"><div class="bar" style="width:90%"></div></div></td>
+            <td><span class="best">Txn v4+</span><div class="bar-container"><div class="bar" style="width:85%"></div></div></td>
+            <td>Serializable<div class="bar-container"><div class="bar" style="width:90%"></div></div></td>
+            <td>—<div class="bar-container"><div class="bar" style="width:25%"></div></div></td>
+          </tr>
+          <tr class="proj-row-4">
+            <td>Chat Real-Time</td>
+            <td>Polling<div class="bar-container"><div class="bar" style="width:50%"></div></div></td>
+            <td>Realtime<div class="bar-container"><div class="bar" style="width:95%"></div></div></td>
+            <td>AQ<div class="bar-container"><div class="bar" style="width:80%"></div></div></td>
+            <td>Broker<div class="bar-container"><div class="bar" style="width:85%"></div></div></td>
+            <td><span class="best">ChangeStreams</span><div class="bar-container"><div class="bar" style="width:90%"></div></div></td>
+            <td>Notify<div class="bar-container"><div class="bar" style="width:70%"></div></div></td>
+            <td>Version<div class="bar-container"><div class="bar" style="width:40%"></div></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+     <!-- ABA 4 -->
+    <section id="tab4">
+      <h2>4. Melhor Opção por Projeto</h2>
+      <p class="section-desc">Justificativa detalhada, + ROI e TCO interativos.</p>
+
+      <!-- Loja Virtual -->
+      <h3>Loja Virtual: <span class="best">MongoDB + Redis</span></h3>
+      <ul>
+        <li>Flexibilidade: catálogo sem downtime (<code>updateMany()</code>).</li>
+        <li>Escalabilidade: 500k writes/s em 3 shards.</li>
+        <li>Custo/h: Atlas M30 US$0.24 + Redis US$0.09 vs RDS MySQL US$0.29 + ElastiCache US$0.15.</li>
+      </ul>
+
+      <!-- Widget ROI -->
+      <div class="compare-block">
+        <h4>Calculadora de ROI</h4>
+        <label>Meses de migração: <input type="number" id="roi-months" value="12" min="1" style="width:4rem;" /></label>
+        <button id="calc-roi" style="margin-left:1rem;">Calcular ROI</button>
+        <p id="roi-result"></p>
+        <!-- Gráfico TCO interativo em SVG -->
+        <svg id="tco-chart" width="100%" height="120" style="margin-top:1rem;">
+          <!-- Base do gráfico -->
+          <rect x="0%" y="20" width="20%" height="20" fill="rgba(39,174,96,0.3)"></rect>
+          <text x="10%" y="15" text-anchor="middle">MongoDB (1y)</text>
+          <rect x="25%" y="20" width="50%" height="20" fill="rgba(192,57,43,0.3)"></rect>
+          <text x="50%" y="15" text-anchor="middle">Alternativa (1y)</text>
+          <!-- 3 anos -->
+          <rect x="0%" y="60" width="20%" height="20" fill="rgba(39,174,96,0.5)"></rect>
+          <text x="10%" y="55" text-anchor="middle">MongoDB (3y)</text>
+          <rect x="25%" y="60" width="60%" height="20" fill="rgba(192,57,43,0.5)"></rect>
+          <text x="55%" y="55" text-anchor="middle">Alternativa (3y)</text>
+        </svg>
+         <ul>
+        <li>Evolução contínua de catálogo sem downtime (<code>updateMany()</code>).</li>
+        <li>Escalabilidade automática a 500k writes/s em cluster Atlas.</li>
+        <li>Custo operacional ~25% menor vs RDS/ElastiCache.</li>
+      </ul>
+      </div>
+
+      <!-- IA Recomendações -->
+      <h3>IA Recomendações: <span class="best">PostgreSQL + pgvector + DW + MongoDB</span></h3>
+      <ul>
+        <li>Vetores: k-NN <5ms com pgvector.</li>
+        <li>Analytics: JSONB+CTEs vs pipeline complexo.</li>
+        <li>Custo: Aurora pausable vs Atlas sempre on.</li>
+        <li>Aggregation Pipeline + Vector Search integrado.</li>
+        <li>Change Streams + Kafka para ingestão em tempo real.</li>
+        <li>1ms retrieval com Atlas Vector Search.</li>
+      </ul>
+
+      <!-- Pagamento Integrado -->
+      <h3>Pagamento Integrado: <span class="best">PostgreSQL+ MongoDB</span></h3>
+      <ul>
+        <li>ACID+Audit: Serializable+pgAudit.</li>
+        <li>DR: Patroni failover <1s.</li>
+        <li>Custo: RDS Multi-AZ $0.48/h vs Oracle $2.00/h/core.</li>
+        <li>Transações multi-doc ACID v4+ configuráveis.</li>
+        <li>WriteConcern “majority” + journaling para compliance.</li>
+        <li>Atlas ent. sem licenciamento por core, TCO estável.</li>  
+      </ul>
+
+      <!-- Chat Real-Time -->
+      <h3>Chat Real-Time: <span class="best">Firebase + MongoDB</span></h3>
+      <ul>
+        <li>Realtime+Offline: Firestore Sync.</li>
+        <li>Histórico: Change Streams+TTL.</li>
+        <li>Custo: Blaze $0.18/1M ops + Atlas M0 free vs RDS+MQ $0.50/h.</li>
+        <li>Change Streams + Realm Sync para offline/online.</li>
+        <li>Clusters globais Atlas (99.99% SLA) suportando milhões de conexões.</li>
+        <li>TTL indexes para aging automático do histórico.</li>
+      </ul>
+
+      <!-- Depoimentos/Video -->
+      <div class="compare-block">
+        <h4>Depoimentos & Cases</h4>
+        <div id="testimonial-carousel" style="display:flex;overflow-x:auto;">
+          <div style="min-width:200px;padding:1rem;background:#ecf0f1;margin-right:1rem;border-radius:4px;">
+            “Empresa X reduziu 40% de latência no checkout com MongoDB.”<br>
+            <em>— CTO, LojaOnline</em>
+          </div>
+           </section>
+
+    <!-- ABA 5 -->
+    <section id="tab5">
+      <h2>5. Defesa MongoDB – Superando os Rivais</h2>
+      <p class="section-desc">15 razões claras, roadmap, benchmarks e prova social.</p>
+
+       <h4>Roadmap de Features Futuras</h4>
+        <ul>
+          <div class="timeline-item"><strong><li>v7.2 – Sharding por Geo-JSON (Q3/25)</li>
+          <div class="timeline-item"><strong><li>v8.0 – Transações Distribuídas Avançadas (Q1/26)</li>
+          <div class="timeline-item"><strong><li>v8.1 – Melhorias em Vector Search</li>
+          <div class="timeline-item"><strong><li>25% economia vs RDS/Oracle.</li>
+          <div class="timeline-item"><strong><li><dt style="color:#C0392B;">Contra-arg. RDBMS</li>
+          <div class="timeline-item"><strong><li><dt style="color:#C0392B;">Custos/licenças altos, tuning intensivo, esquemas rígidos.</li>
+      </dl>
+     </div>
+            
+      <!-- Prova social -->
+      <h3>Principais Usuários</h3>
+      <div class="clients" style="display:flex;gap:1rem;margin:1rem 0;">
+        <img src="https://logo.clearbit.com/adobe.com" alt="Adobe" height="40">
+        <img src="https://logo.clearbit.com/lyft.com" alt="Lyft" height="40">
+        <img src="https://logo.clearbit.com/google.com" alt="Google" height="40">
+      </div>
+
+      <!-- Benchmarks -->
+      <h3>Benchmarks Públicos</h3>
+      <div class="compare-block">
+        <h4>YCSB Throughput</h4>
+        <ul>
+          <li>MongoDB: 200k ops/s (Atlas M30)</li>
+          <li>MySQL: 50k ops/s (Primary-Replica)</li>
+        </ul>
+      </div>
+
+      <!-- Pontos de defesa -->
+      <!-- Accordion de reasons -->
+      <div class="compare-block">
+        <details open>
+          <summary style="color:#27AE60;">1. Document Modeling <span class="weak">vs ALTER TABLE</span></summary>
+          MongoDB armazena documentos sem schema lock (<code>updateMany()</code>) em ms.  
+          <a href="https://docs.mongodb.com/manual/core/schema-validation/" target="_blank">Leia mais →</a>
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">2. Evolução de Esquema</summary>
+          Adicione campos em runtime sem downtime.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">3. Denormalização otimizada</summary>
+          Query single-document <5ms vs JOINs caros em RDBMS.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">4. Alta Taxa de Ingestão</summary>
+          50k+ ops/s por shard vs contenção de locks.  
+          <span class="count" data-target="50000">0</span> ops/s
+        </details>
+        <!-- … até 15… -->
+        <details open>
+          <summary style="color:#27AE60;">5. Aggregation Pipeline</summary>
+          Transformações inline, faceted search nativo.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">6. Change Streams</summary>
+          Event sourcing sem polling.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">7. ACID Multi-Document</summary>
+          Transações v4+ sem custo extra.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">8. Sharding Automático</summary>
+          Zone sharding vs ProxySQL/Citus.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">9. TTL Indexes</summary>
+          Cleanup automático sem cron jobs.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">10. Geospatial</summary>
+          2dsphere queries nativas.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">11. Vector Search</summary>
+          Atlas Vector Search integrado.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">12. Security & Encryption</summary>
+          SCRAM, LDAP, Field-Level Encryption no Atlas.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">13. Backup & Snapshots</summary>
+          Snapshots incrementais automáticos.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">14. Monitoring & Alerts</summary>
+          Atlas UI com alertas prontos.  
+        </details>
+        <details open>
+          <summary style="color:#27AE60;">15. TCO & Licenciamento</summary>
+          25% de economia vs RDS/Oracle.  
+        </details>
+       
+    </section>
+
+    <!-- ABA 6 -->
+    <section id="tab6">
+      <h2>6. Comparativo Detalhado: MongoDB vs Cada Banco</h2>
+      <p class="section-desc">Verde = vantagem MongoDB; Vermelho = limitação concorrente.</p>
+
+      <div class="compare-block">
+        <h3>MongoDB vs MySQL <span class="best">Best-in-class</span></h3>
+        
+          <summary>Esquema & Sharding</summary>
+          <ul>
+            <li><span style="color:#27AE60;">Schema-flexível</span> vs <span style="color:#C0392B;">Rígido</span></li>
+            <li><span style="color:#27AE60;">Sharding automático</span> vs <span style="color:#C0392B;">Manual</span></li>
+          </ul>
+        
+        
+          <summary>Transações & Custo</summary>
+          <ul>
+            <li><span style="color:#27AE60;">ACID multi-doc v4+</span> vs <span style="color:#27AE60;">ACID InnoDB</span></li>
+            <li><span style="color:#27AE60;">Atlas M30 $0.24/h</span> vs <span style="color:#C0392B;">RDS+Proxy $0.44/h</span></li>
+          </ul>
+        
+      </div>
+
+      <div class="compare-block">
+        <h3>MongoDB vs PostgreSQL <span class="best">Best-in-class</span></h3>
+        
+          <summary>JSON & Vetores</summary>
+          <ul>
+            <li><span style="color:#27AE60;">BSON nativo</span> vs <span style="color:#27AE60;">JSONB+extensões</span></li>
+            <li><span style="color:#27AE60;">Sharding nativo</span> vs <span style="color:#C0392B;">Citus externo</span></li>
+            <li><span style="color:#27AE60;">Atlas Vector Search</span> vs <span style="color:#C0392B;">pgvector ext.</span></li>
+          </ul>
+        
+      </div>
+
+      <div class="compare-block">
+        <h3>MongoDB vs Firebase <span class="best">Best-in-class</span></h3>
+        
+          <summary>Realtime & Queries</summary>
+          <ul>
+            <li><span style="color:#27AE60;">Change Streams & Realm Sync</span> vs <span style="color:#27AE60;">SDK offline</span></li>
+            <li><span style="color:#27AE60;">Aggregation Pipeline</span> vs <span style="color:#C0392B;">Filtros limitados</span></li>
+            <li><span style="color:#27AE60;">Custo previsível</span> vs <span style="color:#C0392B;">Ops imprevisíveis</span></li>
+          </ul>
+        
+      </div>
+
+      <div class="compare-block">
+        <h3>MongoDB vs Oracle & SQL Server <span class="best">Best-in-class</span></h3>
+        
+          <summary>Licenças & Agilidade</summary>
+          <ul>
+            <li><span style="color:#27AE60;">Open-source/SSPL</span> vs <span style="color:#C0392B;">Enterprise caro</span></li>
+            <li><span style="color:#27AE60;">JSON native</span> vs <span style="color:#C0392B;">PL/SQL/T-SQL complexos</span></li>
+          </ul>
+        
+      </div>
+
+      <div class="compare-block">
+        <h3>MongoDB vs ZODB <span class="best">Best-in-class</span></h3>
+        
+          <summary>Escala & Multi-ling.</summary>
+          <ul>
+            <li><span style="color:#27AE60;">Multi-idiomas</span> vs <span style="color:#C0392B;">Python only</span></li>
+            <li><span style="color:#27AE60;">Atlas global HA</span> vs <span style="color:#C0392B;">ZEO limitado</span></li>
+          </ul>
+        
+      </div>
+    </section>
+
+    <!-- ABA 7 -->
+    <section id="tab7">
+      <h2>7. Scoreboard & Vantagem de Custo</h2>
+      <p class="section-desc">Pontuação por cenário, simulação “E se…”, radar SVG, export CSV/PDF.</p>
+      
+        <!-- Tabela -->
+      <table id="score-table">
+        <thead><tr><th>Banco</th><th>Loja</th><th>IA</th><th>Pagamento</th><th>Chat RT</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr data-banco="MySQL"><td>MySQL</td><td class="s-Loja">8</td><td class="s-IA">6</td><td class="s-Pagamento">9</td><td class="s-ChatRT">4</td><td class="s-Total">27</td></tr>
+          <tr data-banco="Firebase"><td>Firebase</td><td class="s-Loja">8</td><td class="s-IA">7</td><td class="s-Pagamento">3</td><td class="s-ChatRT">9</td><td class="s-Total">27</td></tr>
+          <tr data-banco="Oracle"><td>Oracle</td><td class="s-Loja">7</td><td class="s-IA">6</td><td class="s-Pagamento">8</td><td class="s-ChatRT">7</td><td class="s-Total">28</td></tr>
+          <tr data-banco="SQLServer"><td>SQL Server</td><td class="s-Loja">7</td><td class="s-IA">7</td><td class="s-Pagamento">8</td><td class="s-ChatRT">8</td><td class="s-Total">30</td></tr>
+          <tr data-banco="MongoDB"><td><span class="best">MongoDB</span></td><td class="s-Loja">9</td><td class="s-IA">9</td><td class="s-Pagamento">9</td><td class="s-ChatRT">9</td><td class="s-Total">36</td></tr>
+          <tr data-banco="PostgreSQL"><td>PostgreSQL</td><td class="s-Loja">8</td><td class="s-IA">8</td><td class="s-Pagamento">8</td><td class="s-ChatRT">7</td><td class="s-Total">31</td></tr>
+          <tr data-banco="ZODB"><td>ZODB</td><td class="s-Loja">6</td><td class="s-IA">2</td><td class="s-Pagamento">2</td><td class="s-ChatRT">5</td><td class="s-Total">15</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Simulação -->
+      <div class="compare-block">
+        <h4>Simulação de Peso</h4>
+        <label>Loja: <input type="range" class="weight" data-target="Loja" min="0" max="100" value="25"> <span id="w-Loja">25%</span></label><br>
+        <label>IA: <input type="range" class="weight" data-target="IA" min="0" max="100" value="25"> <span id="w-IA">25%</span></label><br>
+        <label>Pagamento: <input type="range" class="weight" data-target="Pagamento" min="0" max="100" value="25"> <span id="w-Pagamento">25%</span></label><br>
+        <label>Chat RT: <input type="range" class="weight" data-target="ChatRT" min="0" max="100" value="25"> <span id="w-ChatRT">25%</span></label><br>
+        <button id="recalc-scores">Recalcular Total</button>
+      </div>
+     
+     
+ <!-- Custom compare -->
+<div class="compare-block">
+  <h4>Comparar com seu banco</h4>
+  <input type="text" id="custom-bank" placeholder="Digite o nome do banco" />
+  <button id="compare-custom">Comparar</button>
+
+  <div class="compare-container">
+    <!-- Tabela de resultados -->
+    <div id="result-table"></div>
+
+    <!-- Radar e legenda -->
+    <div class="radar-container">
+      <svg id="radar" width="300" height="300" viewBox="0 0 300 300">
+        <!-- grid -->
+        <circle cx="150" cy="150" r="100" fill="none" stroke="#ccc" stroke-dasharray="4 4"></circle>
+        <circle cx="150" cy="150" r="66"  fill="none" stroke="#eee" stroke-dasharray="2 2"></circle>
+        <circle cx="150" cy="150" r="33"  fill="none" stroke="#eee" stroke-dasharray="2 2"></circle>
+        <!-- eixos -->
+        <text x="150" y="15"  text-anchor="middle">Loja</text>
+        <text x="280" y="150" text-anchor="middle">IA</text>
+        <text x="150" y="285" text-anchor="middle">Pagamento</text>
+        <text x="20"  y="180" text-anchor="middle">Chat RT</text>
+      </svg>
+      <div id="radar-legend" class="radar-legend"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+
+    </main>
+<script>
+// Script de navegação entre abas internas
+    document.querySelectorAll('.section-nav a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('.section-nav a').forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+        document.querySelectorAll('main section').forEach(s => s.classList.remove('active'));
+        document.getElementById(a.getAttribute('href').slice(1)).classList.add('active');
+      });
+    });
+// ROI calculator Aba 4
+const btnCalc = document.getElementById('calc-roi');
+if (btnCalc) {
+  btnCalc.addEventListener('click', () => {
+    // pega o número de meses
+    const months = parseInt(document.getElementById('roi-months').value, 10) || 0;
+    // custos/hora: alternativa $0.44 vs MongoDB+Redis $0.33
+    const diffPerHour = 0.44 - 0.33;
+    // calcula quantas horas no total
+    const hours = 24 * 30 * months;
+    // economia total
+    const savings = diffPerHour * hours;
+    // exibe no parágrafo
+    document.getElementById('roi-result').innerHTML =
+      `<strong>Economia aproximada em ${months} meses: US$ ${savings.toFixed(2)}</strong>`;
+  });
+}
+
+  <!-- ==== SEU JS ORIGINAL ==== -->
+  document.getElementById('compare-custom').addEventListener('click', () => {
+  const name            = document.getElementById('custom-bank').value.trim();
+  const tableContainer  = document.getElementById('result-table');
+  const svg             = document.getElementById('radar');
+  const legendContainer = document.getElementById('radar-legend');
+
+  // limpa resultados anteriores
+  tableContainer.innerHTML = '';
+  legendContainer.innerHTML = '';
+  svg.querySelectorAll('polygon').forEach(p => p.remove());
+
+  if (!name) {
+    tableContainer.textContent = 'Digite um banco.';
+    return;
+  }
+
+  // pontos de comparação
+  const negativePoints = [
+    `${name} usa esquema fixo`,
+    `${name} escala verticalmente`,
+    `${name} sofre overhead em JOINs`,
+    `${name} não tem text search nativo`
+  ];
+  const positivePoints = [
+    `MongoDB é schemaless e flexível`,
+    `MongoDB shard-based horizontal`,
+    `MongoDB gravações atômicas por documento`,
+    `MongoDB suporta text & geosearch`
+  ];
+
+  // monta a tabela
+  let html = '<table><thead><tr><th>Pontos Negativos</th><th>Pontos Positivos</th></tr></thead><tbody>';
+  negativePoints.forEach((neg, i) => {
+    html += `<tr>
+               <td class="negative">${neg}</td>
+               <td class="positive">${positivePoints[i]}</td>
+             </tr>`;
+  });
+  html += '</tbody></table>';
+  tableContainer.innerHTML = html;
+
+  // monta a legenda
+  legendContainer.innerHTML = `
+    <div class="legend-item">
+      <span class="legend-color mongo"></span> MongoDB
+    </div>
+    <div class="legend-item">
+      <span class="legend-color custom"></span> ${name}
+    </div>
+  `;
+
+  // configurações do radar
+  const axes   = 4;
+  const center = 150, radius = 100;
+  const mongoScores  = [0.9, 0.8, 0.7, 0.85];
+  const customScores = [0.6, 0.5, 0.4, 0.55];
+
+  // converte valores [0–1] em "x,y"
+  function scoresToPoints(scores) {
+    return scores.map((v, i) => {
+      const angle = (Math.PI * 2 / axes) * i - Math.PI/2;
+      const x = center + v * radius * Math.cos(angle);
+      const y = center + v * radius * Math.sin(angle);
+      return `${x},${y}`;
+    }).join(' ');
+  }
+
+  // desenha MongoDB
+  const polyMongo = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  polyMongo.setAttribute('points', scoresToPoints(mongoScores));
+  polyMongo.setAttribute('class', 'radar-mongo');
+  svg.appendChild(polyMongo);
+
+  // desenha banco customizado
+  const polyCustom = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  polyCustom.setAttribute('points', scoresToPoints(customScores));
+  polyCustom.setAttribute('class', 'radar-custom');
+  svg.appendChild(polyCustom);
+});
+
+
+
+// Expand IA log
+    document.querySelectorAll('.expand-btn').forEach(btn=>{
+      btn.onclick = ()=> {
+        const tr = document.getElementById(btn.dataset.target);
+        tr.style.display = tr.style.display==='none'? 'table-row':'none';
+      };
+    });
+    // Ativa Tippy
+    tippy('[data-tippy-content]');
+
+    // Dark mode
+    document.getElementById('toggle-theme').onclick = () =>
+      document.body.classList.toggle('dark-mode');
+
+    // Global search
+    document.getElementById('global-search').addEventListener('input', e => {
+      const term = e.target.value.toLowerCase();
+      if (!term) return;
+      const secs = document.querySelectorAll('main section');
+      const tabs = document.querySelectorAll('.section-nav a');
+      for (const s of secs) {
+        if (s.querySelector('h2').textContent.toLowerCase().includes(term)) {
+          tabs.forEach(x => x.classList.remove('active'));
+          secs.forEach(x => x.classList.remove('active'));
+          const btn = Array.from(tabs).find(b => b.getAttribute('href') === '#' + s.id);
+          btn.classList.add('active');
+          s.classList.add('active');
+          s.scrollIntoView({ behavior: 'smooth' });
+          break;
+        }
+      }
+    });
+
+    // Filtros aba2
+    document.querySelectorAll('.theme-filter').forEach(cb => {
+      cb.onchange = () => {
+        document.querySelectorAll('.theme-block.' + cb.dataset.target)
+          .forEach(el => el.style.display = cb.checked ? 'block' : 'none');
+      };
+    });
+
+    // Sort cross-table
+    document.querySelectorAll('#cross-table th').forEach((th, i) => {
+      th.onclick = () => {
+        const table = th.closest('table'),
+              rows = Array.from(table.tBodies[0].rows);
+        const asc = !th.asc;
+        rows.sort((a, b) => {
+          const A = a.cells[i].textContent.trim(),
+                B = b.cells[i].textContent.trim();
+          return isNaN(A) ? (asc ? A.localeCompare(B) : B.localeCompare(A))
+                         : (asc ? A - B : B - A);
+        });
+        th.asc = asc;
+        rows.forEach(r => table.tBodies[0].appendChild(r));
+      };
+    });
+
+    // Expand IA log
+    document.querySelectorAll('.expand-btn').forEach(btn => {
+      btn.onclick = () => {
+        const tr = document.getElementById(btn.dataset.target);
+        tr.style.display = tr.style.display === 'none' ? 'table-row' : 'none';
+      };
+    });
+
+    // Simulação scores
+    const weights = document.querySelectorAll('.weight');
+    weights.forEach(w => {
+      w.oninput = () =>
+        document.getElementById('w-' + w.dataset.target).textContent = w.value + '%';
+    });
+    document.getElementById('recalc-scores').onclick = () => {
+      const w = {};
+      weights.forEach(i => w[i.dataset.target] = +i.value / 100);
+      document.querySelectorAll('#score-table tbody tr').forEach(tr => {
+        let total = 0;
+        ['Loja', 'IA', 'Pagamento', 'ChatRT'].forEach(k => {
+          total += (+tr.querySelector('.s-' + k).textContent) * w[k];
+        });
+        tr.querySelector('.s-Total').textContent = total.toFixed(1);
+      });
+    };
+
+    // Export CSV
+    document.getElementById('export-csv')?.addEventListener('click', () => {
+      let csv = '', rows = document.querySelectorAll('#score-table tr');
+      rows.forEach(r => {
+        let cols = r.querySelectorAll('td,th');
+        csv += Array.from(cols).map(c => `"${c.textContent.trim()}"`).join(',') + '\n';
+      });
+      const blob = new Blob([csv], { type: 'text/csv' }),
+            url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'scoreboard.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Export PDF
+    document.getElementById('export-pdf')?.addEventListener('click', () => {
+      const { jsPDF } = window.jspdf,
+            doc = new jsPDF();
+      doc.text("Scoreboard de Bancos de Dados", 10, 10);
+      doc.autoTable({ html: '#score-table', startY: 20 });
+      doc.save('scoreboard.pdf');
+    });
+
+    // Deep-link
+    if (location.hash) {
+      const id = location.hash.slice(1),
+            btn = Array.from(document.querySelectorAll('.section-nav a'))
+                  .find(b => b.getAttribute('href') === '#' + id);
+      if (btn) btn.click();
+    }
+
+    // ======= Novo: Nav de abas internas =======
+    document.querySelectorAll('.section-nav a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('.section-nav a').forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+        const id = a.getAttribute('href').slice(1);
+        document.querySelectorAll('main section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

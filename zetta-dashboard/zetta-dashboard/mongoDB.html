@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MongoDB Simulado – ZettaSystems</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/mongoDB.css"/>
+  <script src="https://kit.fontawesome.com/SEU_KIT.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Toggles -->
+  <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+  <button id="themeSwitch"><i class="fas fa-moon"></i></button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="zettaMarket.html"><i class="fas fa-store"></i> ZettaMarket</a>
+    <a href="zettaPayments.html"><i class="fas fa-credit-card"></i> ZettaPayments</a>
+    <a href="mongoDB.html" class="active"><i class="fas fa-database"></i> Banco de Dados</a>
+    <a href="bi.html"><i class="fas fa-chart-line"></i> BI Atlas</a>
+    <a href="simulador-de-banco-de-dados.html"><i class="fas fa-store"></i> Comparador de BD</a>
+    <a href="matriz-seguranca.html">Matriz Segurança</a>
+    <a href="atendimento_cliente.html">Atendimento</a>
+    <a href="sobre.html"><i class="fas fa-users"></i>Sobre Nós</a>
+  </aside>
+
+ <header class="main-header">
+  <img src="assets/mongoDB.png" alt="Logo MongoDB" class="logo-img"/>
+  <div class="texts">
+    <h1>mongoDB Simulado</h1>
+    <small>Arquitetura & Movimentações</small>
+  </div>
+</header>
+
+
+  <!-- Main Nav -->
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="zettaMarket.html">ZettaMarket</a>
+    <a href="zettaPayments.html">ZettaPayments</a>
+    <a href="mongoDB.html" class="active">Banco de Dados</a>
+    <a href="bi.html">BI Atlas</a>
+    <a href="simulador-de-banco-de-dados.html">Comparativo de Bancos de Dados</a>
+    <a href="matriz-seguranca.html">Matriz Segurança</a>
+    <a href="atendimento_cliente.html">Atendimento</a>
+    <a href="sobre.html">Sobre Nós</a>
+  </nav>
+
+  <main>
+    <!-- KPIs Gerais -->
+    <section class="kpi-row">
+      <div class="kpi"><h3>Apps Conectados</h3><p id="kpiApps">0</p></div>
+      <div class="kpi"><h3>DB Nodes</h3><p id="kpiNodes">0</p></div>
+      <div class="kpi"><h3>Consultas</h3><p id="kpiQueries">0</p></div>
+      <div class="kpi"><h3>Bloqueios</h3><p id="kpiBlocked">0</p></div>
+      <div class="kpi"><h3>Índices</h3><p id="kpiIndexes">0</p></div>
+      <div class="kpi"><h3>Grants</h3><p id="kpiGrants">0</p></div>
+    </section>
+
+    <!-- Alerts & Queries Lado a Lado -->
+    <section class="alerts-queries">
+      <!-- Alertas de Segurança -->
+      <div class="alert-box">
+        <h2>🔒 Alertas de Segurança</h2>
+        <ul id="alertList"></ul>
+      </div>
+
+      <!-- Consultas & Controles -->
+      <div class="query-box">
+        <h2>📋 Consultas & Controles</h2>
+        <ul>
+          <li><code>db.collection.find({})</code> <span class="qcount" id="qc-find">0</span></li>
+          <li><code>db.orders.aggregate([…])</code> <span class="qcount" id="qc-agg">0</span></li>
+          <li><code>db.table.stats()</code> <span class="qcount" id="qc-stats">0</span></li>
+          <li><code>db.inventory.watch()</code> <span class="qcount" id="qc-watch">0</span></li>
+          <li><code>db.adminCommand({ listDatabases: 1 })</code> <span class="qcount" id="qc-listdb">0</span></li>
+          <li><code>db.runCommand({ collMod: ... })</code> <span class="qcount" id="qc-collmod">0</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Serviços & Integrações -->
+    <section class="services">
+      <div class="box"><i class="fas fa-cloud"></i><br/>Metadata<p id="svcMetadata">0</p></div>
+      <div class="box"><i class="fas fa-cubes"></i><br/>Schema<p id="svcSchema">0</p></div>
+      <div class="box"><i class="fas fa-exchange-alt"></i><br/>Migration<p id="svcMigration">0</p></div>
+      <div class="box"><i class="fas fa-shield-alt"></i><br/>Security<p id="svcSecurity">0</p></div>
+      <div class="box"><i class="fas fa-gavel"></i><br/>Governance<p id="svcGovernance">0</p></div>
+      <div class="box"><i class="fas fa-chart-line"></i><br/>BI Integration<p id="svcBI">0</p></div>
+      <div class="box"><i class="fas fa-sitemap"></i><br/>Data Federation<p id="svcFederation">0</p></div>
+      <div class="box"><i class="fas fa-stream"></i><br/>Change Streams<p id="svcStreams">0</p></div>
+      <div class="box"><i class="fas fa-clone"></i><br/>Table Movements<p id="svcTables">0</p></div>
+      <div class="box"><i class="fas fa-clipboard-list"></i><br/>Orders Control<p id="svcOrders">0</p></div>
+      <div class="box"><i class="fas fa-network-wired"></i><br/>Cross-DB Link<p id="svcCross">0</p></div>
+      <div class="box"><i class="fas fa-file-alt"></i><br/>Audit & Compliance<p id="svcAudit">0</p></div>
+    </section>
+
+    <!-- Infraestrutura -->
+    <section class="infra-grid">
+      <div class="infra"><h3>Cluster Ops</h3><p id="kpiClusterOps">0</p></div>
+      <div class="infra"><h3>Storage I/O</h3><p id="kpiStorageIO">0 MB/s</p></div>
+      <div class="infra"><h3>Backups</h3><p id="kpiBackups">0</p></div>
+      <div class="infra"><h3>Intrusões</h3><p id="kpiIntrusions">0</p></div>
+    </section>
+  </main>
+
+  <footer>© 2025 ZettaSystems</footer>
+  <script src="js/mongoDB.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+.kpi-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem;
+}
+.kpi {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+  flex: 1;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.kpi h3 { margin: 0; color: #333; font-size: 1rem; }
+.kpi p  { margin: .5rem 0 0; font-size: 1.5rem; color: #007acc; }
+
+#securityAlerts {
+  margin: 1rem;
+}
+#securityAlerts ul {
+  background: #fff;
+  border-radius: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding: .75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+#securityAlerts li {
+  padding: .5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem;
+}
+.services .box {
+  background: #f8f9fa;
+  flex: 1 1 120px;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: .9rem;
+  color: #333;
+}
+
+.queries {
+  background: #fff;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.queries h2 {
+  margin-top: 0;
+  color: #007acc;
+  font-size: 1.1rem;
+}
+.queries ul {
+  list-style: none;
+  padding-left: 0;
+}
+.queries li {
+  font-family: monospace;
+  margin: .4rem 0;
+}
+
+.infra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 1rem;
+  margin: 1rem;
+}
+.infra {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.infra h3 { margin: 0; color: #333; font-size: 1rem; }
+.infra p  { margin: .5rem 0 0; font-size: 1.3rem; color: #007acc; }
+/* Aumenta logo */
+.logo-img {
+  height: 80px;
+}
+
+/* Contadores dinâmicos em Queries & Controles */
+.queries .qcount {
+  font-weight: bold;
+  margin-left: 0.5rem;
+  color: #007acc;
+}
+
+/* Ajuste do parágrafo dentro de cada .box para exibir KPI */
+.services .box p {
+  margin-top: 0.5rem;
+  font-size: 1.3rem;
+  color: #007acc;
+  font-weight: bold;
+}
+
+/* Ajusta a logo para usar o ícone enviado e deixa-a maior */
+.main-header .logo-img {
+  content: url('../assets/mongoDB.png'); /* caminho da imagem do ícone */
+  height: 80px;      /* aumentar para 100px de altura */
+  width: auto;        /* manter proporção */
+}
+
+
+/* Layout para Alerts & Queries lado a lado */
+.alerts-queries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem;
+}
+.alert-box,
+.query-box {
+  background: #fff;
+  flex: 1;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.query-box ul {
+  list-style: none;
+  padding: 0;
+}
+.query-box li {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  font-family: monospace;
+}
+.qcount {
+  font-weight: bold;
+  color: #007acc;
+}
+
+/* KPI dos serviços */
+.services .box p {
+  margin-top: 0.5rem;
+  font-size: 1.3rem;
+  color: #007acc;
+  font-weight: bold;
+}
+
+/* Mantém restante do CSS conforme antes */
+

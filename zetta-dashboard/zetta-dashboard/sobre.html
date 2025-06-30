@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Sobre Nós – ZettaSystems</title>
+  <!-- CSS global e específico -->
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/sobre.css"/>
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/SEU_KIT.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Toggles -->
+  <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+  <button id="themeSwitch"><i class="fas fa-moon"></i></button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="zettaMarket.html"><i class="fas fa-store"></i> ZettaMarket</a>
+    <a href="zettaPayments.html"><i class="fas fa-credit-card"></i> ZettaPayments</a>
+    <a href="mongoDB.html"><i class="fas fa-database"></i> Banco de Dados</a>
+    <a href="bi.html"><i class="fas fa-chart-line"></i> BI Atlas</a>
+    <a href="simulador-de-banco-de-dados.html"><i class="fas fa-store"></i> Comparador de BD</a>
+    <a href="sobre.html" class="active"><i class="fas fa-users"></i> Sobre Nós</a>
+  </aside>
+
+  <!-- Header -->
+  <header class="main-header">
+    <img src="assets/univale.png" alt="UNIVALE" class="logo-img"/>
+    <div class="texts">
+      <h1>Sobre Nós</h1>
+      <small>Fundação Percival Farquhar – UNIVALE</small>
+    </div>
+  </header>
+
+  <!-- Main Navigation -->
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="zettaMarket.html">ZettaMarket</a>
+    <a href="zettaPayments.html">ZettaPayments</a>
+    <a href="mongoDB.html">Banco de Dados</a>
+    <a href="bi.html">BI Atlas</a>
+    <a href="simulador-de-banco-de-dados.html">Comparativo de Bancos de Dados</a>
+    <a href="matriz-seguranca.html">Matriz Segurança</a>
+    <a href="atendimento_cliente.html">Atendimento</a>
+    <a href="sobre.html" class="active">Sobre Nós</a>
+  </nav>
+
+  <main>
+    <div class="about-container">
+      <!-- Introdução -->
+      <h2>Fundação Percival Farquhar (FPF) – UNIVALE</h2>
+      <p>
+        Somos alunos do curso de Sistemas de Informação da Universidade Vale do Rio Doce (UNIVALE),
+        vinculados à Fundação Percival Farquhar (FPF). Este projeto, em Grupo 3, aborda
+        <strong>Administração de Segurança de Banco de Dados</strong>, sob orientação dos professores:
+      </p>
+      <ul class="list-styled">
+        <li>Henrique Bianor Freitas Silva</li>
+        <li>Vitor da Silva Ribeiro</li>
+      </ul>
+
+      <!-- Conteúdo sobre MongoDB -->
+      <h2>Visão Geral do MongoDB</h2>
+      <p>
+        O <strong>MongoDB</strong> é um banco de dados NoSQL orientado a documentos, lançado em 2009 pela MongoDB Inc.,
+        projetado para oferecer flexibilidade de esquema e alta escalabilidade. Ao contrário dos bancos relacionais,
+        ele armazena cada registro como um documento BSON (Binary JSON), permitindo que campos e estruturas evoluam
+        sem migrações onerosas.
+      </p>
+
+      <h3>Histórico e Curiosidades</h3>
+      <ul class="list-styled">
+        <li>Iniciado em 2007 por Dwight Merriman e Eliot Horowitz na 10gen (hoje MongoDB Inc.).</li>
+        <li>O nome “Mongo” vem de “humongous” (gigantesco), refletindo a ambição de lidar com grandes volumes de dados.</li>
+        <li>Em 2024, o Gartner nomeou o MongoDB como Líder no Magic Quadrant para Cloud Database Management Systems pela 3ª vez consecutiva.</li>
+      </ul>
+
+      <h3>Modelo de Dados Documental</h3>
+      <ul class="list-styled">
+        <li>Cada documento é uma coleção de pares campo–valor; valores podem ser objetos ou arrays.</li>
+        <li>Documentos se assemelham a JSON, mas usam BSON internamente para tipos binários e datas.</li>
+        <li>Redução de jointures pesadas, incorporando dados relacionados em um só documento.</li>
+        <li>Alinhamento natural com objetos em linguagens modernas (JavaScript, Python, Java).</li>
+      </ul>
+
+      <h3>Arquitetura e Escalabilidade</h3>
+      <ul class="list-styled">
+        <li><strong>Replica Sets</strong>: configuração mínima de 3 nós, failover automático e eleição de novo primário.</li>
+        <li><strong>Sharding</strong>: particionamento horizontal por chave de shard, distribuindo dados e carga de forma transparente.</li>
+        <li><strong>GridFS</strong>: sistema de arquivos distribuído para armazenar arquivos maiores que 16 MB.</li>
+      </ul>
+
+      <h3>Recursos Avançados de Consulta</h3>
+      <ul class="list-styled">
+        <li><strong>Aggregation Pipeline</strong>: estágios de transformação em lote, comparáveis ao SQL GROUP BY.</li>
+        <li><strong>MapReduce</strong>: processamento paralelo de grandes volumes.</li>
+        <li><strong>Change Streams</strong>: captura de alterações em coleções em tempo real.</li>
+        <li><strong>Transações ACID</strong>: multi-documento desde a versão 4.0.</li>
+        <li><strong>Índices</strong>: B-Tree, compostos, geoespaciais 2dsphere e texto completo.</li>
+      </ul>
+
+      <h3>MongoDB Atlas e Segurança</h3>
+      <ul class="list-styled">
+        <li>Deploys multi-cloud (AWS, Azure, GCP) com apenas alguns cliques.</li>
+        <li>Backups contínuos, criptografia em repouso e TLS em trânsito.</li>
+        <li>IAM, audit logs e detecção de anomalias baseados em AI.</li>
+      </ul>
+
+      <h3>Casos de Uso e Aplicações</h3>
+      <ul class="list-styled">
+        <li><strong>Aplicações Web Ágeis</strong>: rápido iteration cycle sem alterações de esquema.</li>
+        <li><strong>Big Data & Analytics</strong>: ingestão em larga escala via Kafka/Spark.</li>
+        <li><strong>Internet das Coisas (IoT)</strong>: ingestão em tempo real de sensores.</li>
+        <li><strong>Catálogo de Produtos</strong>: dados heterogêneos, recomendação e pesquisa semântica.</li>
+      </ul>
+
+      <h3>Prós e Contras Acadêmicos</h3>
+      <p><strong>Prós:</strong></p>
+      <ul class="list-styled">
+        <li>Modelagem intuitiva por documentos.</li>
+        <li>Escalabilidade horizontal e alta disponibilidade nativas.</li>
+        <li>Ecossistema rico (drivers, Compass, Charts, Atlas Search).</li>
+      </ul>
+      <p><strong>Contras:</strong></p>
+      <ul class="list-styled">
+        <li>Consultas transacionais complexas exigem design cuidadoso.</li>
+        <li>Consultas mal indexadas podem ser lentas em grandes volumes.</li>
+        <li>Licença SSPL gera debate na comunidade open source.</li>
+      </ul>
+
+      <h3>Referências e Fontes</h3>
+      <ul class="refs">
+        <li>“What Is MongoDB?” – MongoDB.com</li>
+        <li>“Why Use MongoDB?” – MongoDB.com</li>
+        <li>“MongoDB Manual: Introduction & FAQ” – MongoDB Docs</li>
+        <li>“Main Features of MongoDB” – MongoDB.com</li>
+        <li>“MongoDB” – Wikipédia (PT)</li>
+        <li>“What is MongoDB Atlas?” – MongoDB Atlas Docs</li>
+      </ul>
+
+      <!-- Seção “Nosso Time” -->
+<h2>Nosso Time (Grupo 3)</h2>
+<div class="team-row">
+  <!-- Replique este bloco para cada um dos 8 membros -->
+  
+<div class="team-member">
+    <img src="assets/aluno1.jpg" alt="Nome do Aluno 1" class="team-photo"/>
+    <h4>Kémily Kerem Antunes Alves Belgo Costa de Moraes</h4>
+    <small>GP3</small>
+  </div>
+   <div class="team-member">
+    <img src="assets/aluno2.jpg" alt="Nome do Aluno 2" class="team-photo"/>
+    <h4>Pedro Henrique Pereira Silva</h4>
+    <small>GP3</small>
+  </div>
+  <div class="team-member">
+    <img src="assets/aluno3.jpg" alt="Nome do Aluno 3" class="team-photo"/>
+    <h4>Renato de Almeida Teixeira</h4>
+    <small>GP3</small>
+  </div>
+  <div class="team-member">
+    <img src="assets/aluno4.jpg" alt="Nome do Aluno 4" class="team-photo"/>
+    <h4>Renato Rodrigues dos Santos Júnior</h4>
+    <small>GP3</small>
+  </div>
+  <div class="team-member">
+    <img src="assets/aluno5.jpg" alt="Nome do Aluno 5" class="team-photo"/>
+    <h4>Victor Machado Siqueira</h4>
+    <small>GP3</small>
+  </div>
+  <div class="team-member">
+    <img src="assets/aluno6.jpg" alt="Nome do Aluno 6" class="team-photo"/>
+    <h4>Vitor Manoel Vidal Braz</h4>
+    <small>GP3</small>
+  </div>
+  <div class="team-member">
+    <img src="assets/aluno7.jpg" alt="Nome do Aluno 7" class="team-photo"/>
+    <h4>Vitor Santiago de Oliveira</h4>
+    <small>GP3</small>
+  </div>
+  <div class="team-member">
+    <img src="assets/aluno8.jpg" alt="Nome do Aluno 8" class="team-photo"/>
+    <h4>Wauclidson Alves Dias</h4>
+    <small>GP3</small>
+   </div>
+<div class="team-member">
+    <img src="assets/sistemas_info.jpg" alt="Nome do Aluno 2" class="team-photo"/>
+    <h4>Sistemas de Informação</h4>
+    <small>GP3</small>
+</div>
+<div class="team-member">
+    <img src="assets/Prof. Henrique Bianor Freitas Silva.jpg" alt="Nome do Aluno 8" class="team-photo"/>
+    <h4>Prof. Henrique Bianor Freitas Silva</h4>
+    <small>Orientador</small>
+   </div>
+<div class="team-member">
+    <img src="assets/Prof. Vitor Silva Ribeiro.jpg" alt="Nome do Aluno 8" class="team-photo"/>
+    <h4>Prof. Vitor Silva Ribeiro</h4>
+    <small>Orientador</small>
+   </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2025 ZettaSystems | UNIVALE – FPF</footer>
+  <script src="js/sobre.js"></script>
+</body>
+</html>

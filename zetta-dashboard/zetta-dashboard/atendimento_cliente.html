@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZettaSystems – Atendimento ao Cliente</title>
+  <!-- Fonte e ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://kit.fontawesome.com/SEU_KIT.js" crossorigin="anonymous"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/atendimento.css"/>
+</head>
+<body class="loading-fix">
+  <!-- Header e Nav -->
+  <header class="main-header">
+    <img src="assets/ZettaAtendimentos.png" alt="logo ZettaAtendimentos" class="logo-img"/>
+    <div class="texts">
+      <h1>ZettaSystems – Atendimento ao Cliente</h1>
+      <small>Central unificada de canais e feedbacks</small>
+    </div>
+  </header>
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="zettaMarket.html">ZettaMarket</a>
+    <a href="zettaPayments.html">ZettaPayments</a>
+    <a href="mongoDB.html">Banco de Dados</a>
+    <a href="bi.html">BI Atlas</a>
+    <a href="simulador-de-banco-de-dados.html">Comparativo de Bancos</a>
+    <a href="matriz-seguranca.html">Matriz Segurança</a>
+    <a href="atendimento_cliente.html" class="active">Atendimento</a>
+    <a href="sobre.html">Sobre Nós</a>
+  </nav>
+
+  <main>
+    <!-- KPIs -->
+    <section class="kpi-section">
+      <div class="kpi-cards">
+        <div class="kpi-card"><h4>Total de Chamados</h4><p id="kpiTotal">0</p></div>
+        <div class="kpi-card"><h4>Abertos</h4><p id="kpiAbertos">0</p></div>
+        <div class="kpi-card"><h4>Urgentes</h4><p id="kpiUrgentes">0</p></div>
+        <div class="kpi-card"><h4>Tempo Médio</h4><p id="kpiTempo">00:00</p></div>
+        <div class="kpi-card"><h4>Satisfação</h4><p id="kpiSat">0.0 ★</p></div>
+        <div class="kpi-card"><h4>Reclamações</h4><p id="kpiReclam">0</p></div>
+        <div class="kpi-card"><h4>Sugestões</h4><p id="kpiSugest">0</p></div>
+        <div class="kpi-card"><h4>Elogios</h4><p id="kpiElog">0</p></div>
+      </div>
+
+      <div class="feed-box">
+        <h3>Ranking NPS por Loja</h3>
+        <ul id="rankingNPS"></ul>
+      </div>
+      <div class="feed-box">
+        <h3>Colaborador com Mais Elogios</h3>
+        <p id="colaboradorElog">–</p>
+      </div>
+    </section>
+
+    <!-- Distribuição e Tipos -->
+    <section class="distribution-section">
+      <h3>Distribuição de Chamados</h3>
+      <div class="dist-group">
+        <div>Chat <span id="pctChat">0%</span></div>
+        <div>Telefone <span id="pctTelefone">0%</span></div>
+        <div>E-mail <span id="pctEmail">0%</span></div>
+      </div>
+      <h3>Tipos de Solicitação</h3>
+      <div class="dist-group">
+        <div>Reclamações <span id="pctReclamPct">0%</span></div>
+        <div>Sugestões <span id="pctSugestPct">0%</span></div>
+        <div>Outros <span id="pctOutrosPct">0%</span></div>
+      </div>
+    </section>
+
+    <!-- Feed de Tickets -->
+    <section class="feed-section">
+      <h3>Últimos Tickets</h3>
+      <ul id="feedTickets"></ul>
+    </section>
+  </main>
+
+  <footer>© 2025 ZettaSystems</footer>
+  <script src="js/atendimento.js"></script>
+</body>
+</html>

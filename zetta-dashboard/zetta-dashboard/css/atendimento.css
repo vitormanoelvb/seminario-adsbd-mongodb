@@ -1,0 +1,86 @@
+/* KPIs e títulos */
+.kpi-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+.kpi-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px,1fr));
+  gap: 1rem;
+}
+.kpi-card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.75rem;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.kpi-card h4 { font-size: 0.85rem; color: #555; margin-bottom: 0.4rem; }
+.kpi-card p  { font-size: 1.4rem; font-weight: 600; color: #222; }
+
+/* Feed Boxes (Ranking & Colaborador) */
+.feed-box {
+  background: #fff;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.feed-box h3 { font-size: 1rem; color: #333; margin-bottom: 0.6rem; }
+.feed-box ul { list-style: none; padding:0; margin:0; }
+.feed-box li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+/* Distribuição & Tipos */
+.distribution-section {
+  background: #fff;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  margin: 1rem;
+}
+.distribution-section h3 { margin: 0.5rem 0; color: #333; }
+.dist-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.dist-group div {
+  flex: 1 1 120px;
+  background: #fafafa;
+  padding: 0.6rem;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.05);
+}
+.dist-group span {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2980B9;
+  margin-top: 0.2rem;
+}
+
+/* Feed de Tickets */
+.feed-section {
+  margin: 1.5rem;
+}
+.feed-section h3 { margin-bottom:0.5rem; }
+.feed-section ul {
+  list-style: none;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0;
+}
+.feed-section li {
+  padding: 0.35rem 0;
+  border-bottom:1px solid #eee;
+  font-size:0.9rem;
+  color:#444;
+}

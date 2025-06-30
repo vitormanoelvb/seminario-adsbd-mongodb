@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>BI Atlas – ZettaSystems</title>
+  <!-- CSS geral e específico -->
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/bi.css"/>
+  <!-- FontAwesome para ícones -->
+  <script src="https://kit.fontawesome.com/SEU_KIT.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Toggles -->
+  <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+  <button id="themeSwitch"><i class="fas fa-moon"></i></button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="zettaMarket.html"><i class="fas fa-store"></i> ZettaMarket</a>
+    <a href="zettaPayments.html"><i class="fas fa-credit-card"></i> ZettaPayments</a>
+    <a href="mongoDB.html"><i class="fas fa-database"></i> Banco de Dados</a>
+    <a href="bi.html" class="active"><i class="fas fa-chart-line"></i> BI Atlas</a>
+    <a href="matriz-seguranca.html">Matriz Segurança</a>
+    <a href="atendimento_cliente.html">Atendimento</a>
+    <a href="sobre.html"><i class="fas fa-users"></i> Sobre Nós</a>
+  </aside>
+
+  <!-- Header -->
+  <header class="main-header">
+    <img src="assets/BI.png" alt="Logo Zetta" class="logo-img"/>
+    <div class="texts">
+      <h1>BI Atlas</h1>
+      <small>Dashboard Interativo</small>
+    </div>
+  </header>
+
+  <!-- Main Nav -->
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="zettaMarket.html">ZettaMarket</a>
+    <a href="zettaPayments.html">ZettaPayments</a>
+    <a href="mongoDB.html">Banco de Dados</a>
+    <a href="bi.html" class="active">BI Atlas</a>
+    <a href="simulador-de-banco-de-dados.html">Comparativo de Bancos de Dados</a>
+    <a href="matriz-seguranca.html">Matriz Segurança</a>
+    <a href="atendimento_cliente.html">Atendimento</a>
+    <a href="sobre.html">Sobre Nós</a>
+  </nav>
+
+  <!-- Section Nav -->
+  <nav class="section-nav">
+    <a href="#consolidados" class="active">Consolidados</a>
+    <a href="#rh">RH</a>
+    <a href="#financeiro">Finanças</a>
+    <a href="#fiscal">Fiscal</a>
+  </nav>
+
+  <main>
+    <!-- Consolidados Gerais -->
+    <section id="consolidados">
+      <h2>Consolidados Gerais</h2>
+      <div class="kpi-grid">
+        <div class="kpi"><h3>Vendas</h3><p id="kpiSales">0</p></div>
+        <div class="kpi"><h3>Pagamentos</h3><p id="kpiPayments">0</p></div>
+        <div class="kpi"><h3>Operações</h3><p id="kpiOps">0</p></div>
+        <div class="kpi"><h3>Fraudes</h3><p id="kpiFraud">0</p></div>
+      </div>
+      <div class="mini-charts-row">
+        <div class="mini-chart">
+          <span class="chart-title">Vendas T</span>
+          <div class="bars" id="chartSales"></div>
+        </div>
+        <div class="mini-chart">
+          <span class="chart-title">Pagamentos T</span>
+          <div class="bars" id="chartPays"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recursos Humanos -->
+    <section id="rh">
+      <h2>Recursos Humanos</h2>
+      <div class="kpi-grid">
+        <div class="kpi"><h3>Ativos</h3><p id="kpiRHActive">0</p></div>
+        <div class="kpi"><h3>Ausências</h3><p id="kpiRHAus">0</p></div>
+        <div class="kpi"><h3>Contratações</h3><p id="kpiRHNew">0</p></div>
+      </div>
+      <div class="mini-charts-row">
+        <div class="mini-chart">
+          <span class="chart-title">Tendência RH</span>
+          <div class="bars" id="chartRH"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Financeiro -->
+    <section id="financeiro">
+      <h2>Financeiro</h2>
+      <div class="kpi-grid">
+        <div class="kpi"><h3>Receita</h3><p id="kpiFinRev">0</p></div>
+        <div class="kpi"><h3>Despesas</h3><p id="kpiFinExp">0</p></div>
+        <div class="kpi"><h3>Lucro</h3><p id="kpiFinProfit">0</p></div>
+      </div>
+      <div class="mini-charts-row">
+        <div class="mini-chart">
+          <span class="chart-title">Fluxo Fin.</span>
+          <div class="bars" id="chartFin"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fiscal -->
+    <section id="fiscal">
+      <h2>Fiscal</h2>
+      <div class="kpi-grid">
+        <div class="kpi"><h3>Impostos Devidos</h3><p id="kpiFisDue">0</p></div>
+        <div class="kpi"><h3>Impostos Pagos</h3><p id="kpiFisPaid">0</p></div>
+        <div class="kpi"><h3>Multas</h3><p id="kpiFisFines">0</p></div>
+      </div>
+      <div class="mini-charts-row">
+        <div class="mini-chart">
+          <span class="chart-title">Performance</span>
+          <div class="bars" id="chartFis"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 ZettaSystems</footer>
+  <script src="js/data.js"></script>
+  <script src="js/bi.js"></script>
+</body>
+</html>

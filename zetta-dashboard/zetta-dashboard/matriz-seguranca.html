@@ -1,0 +1,198 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MATRIZ DE SEGURANÇA & INDICADORES – ZettaProjects</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',sans-serif; background:#eef2f5; color:#333; }
+    /* Main Header with Logo */
+    .main-header { display:flex; align-items:center; justify-content:center; background:#0d47a1; padding:1rem; color:#fff; }
+    .logo-img { height:100px; margin-right:1rem; }
+    .texts h1 { font-size:1.2rem; margin-bottom:0.25rem; }
+    .texts p { font-size:0.9rem; margin:0; }
+    /* Primary Navigation */
+    .main-nav { display:flex; justify-content:center; background:#1565c0; }
+    .main-nav a { color:#fff; padding:0.75rem 1rem; text-decoration:none; font-weight:bold; }
+    .main-nav a.active { background:#0d47a1; }
+    .main-nav a:hover { background:#0b3d91; }
+    /* Environment Tabs */
+    .env-tabs { display:flex; background:#1976d2; margin-top:1rem; }
+    .env-tabs button { flex:1; padding:0.75rem; border:none; background:inherit; color:#fff; cursor:pointer; font-weight:bold; }
+    .env-tabs button.active { background:#0d47a1; }
+    /* Metrics */
+    .metrics { display:grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap:1rem; margin:1rem; }
+    .metric { background:#fff; border-radius:6px; padding:0.5rem; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+    .metric h3 { font-size:0.9rem; color:#1565c0; }
+    .metric p { font-size:1.2rem; font-weight:bold; margin-top:0.25rem; }
+    /* Main Content Sections */
+    main { padding:0 1rem 1rem; max-width:1000px; margin:0 auto; }
+    .section-full { margin-bottom:1rem; }
+    h2 { margin:0.75rem 0 0.5rem; color:#0d47a1; font-size:1.1rem; }
+    .feature-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap:0.5rem; }
+    .feature { background:#fff; border-radius:4px; padding:0.5rem; text-align:center; box-shadow:0 1px 2px rgba(0,0,0,0.1); font-size:0.85rem; }
+    .feature .name { margin-bottom:0.25rem; font-weight:600; }
+    .feature .pct { font-size:1rem; font-weight:bold; color:#1565c0; }
+    .alerts-full, .ecommerce-full, .failures-full { background:#fff; border-radius:6px; padding:0.75rem; box-shadow:0 1px 3px rgba(0,0,0,0.1); max-height:200px; overflow-y:auto; font-size:0.85rem; }
+    table { width:100%; border-collapse: collapse; font-size:0.85rem; }
+    table, th, td { border:1px solid #ccc; }
+    th, td { padding:0.4rem; text-align:left; }
+    .console { background:#000; color:#0f0; font-family:monospace; padding:0.75rem; margin-top:1rem; height:200px; overflow-y:auto; border-radius:4px; white-space:pre-wrap; font-size:0.75rem; }
+    .alert { padding:0.25rem 0.5rem; margin-bottom:0.25rem; border-radius:3px; font-size:0.8rem; }
+    .alert.error { background:#d32f2f; }
+    .alert.warn  { background:#fbc02d; color:#333; }
+    .alert.info  { background:#1976d2; }
+    footer { text-align:center; margin:1rem 0; font-size:0.75rem; color:#666; }
+  </style>
+</head>
+<body>
+  <!-- Main Header -->
+  <header class="main-header">
+    <img src="assets/ZettaProjects.png" alt="Matriz Logo" class="logo-img" />
+    <div class="texts">
+      <h1>MATRIZ DE SEGURANÇA & INDICADORES – ZettaProjects</h1>
+      <p>Security: Loja Física, Loja Virtual, IA, Pagamento & Chat Real-Time</p>
+    </div>
+  </header>
+
+  <!-- Primary Navigation -->
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="zettaMarket.html">ZettaMarket</a>
+    <a href="zettaPayments.html">ZettaPayments</a>
+    <a href="mongoDB.html">Banco de Dados</a>
+    <a href="bi.html">BI Atlas</a>
+    <a href="comparativo-dbs.html">Comparativo de Bancos</a>
+    <a href="matriz-seguranca.html" class="active">Matriz Segurança</a>
+    <a href="atendimento_cliente.html">Atendimento</a>
+    <a href="sobre.html">Sobre Nós</a>
+  </nav>
+
+  <!-- Environment Selector -->
+  <nav class="env-tabs">
+    <button class="active" data-env="zettaSystems">zettaSystems</button>
+    <button data-env="ZettaMarket">ZettaMarket</button>
+    <button data-env="ZettaPayments">ZettaPayments</button>
+    <button data-env="AtendimentoCliente">Atendimento Cliente</button>
+    <button data-env="RecebimentosExternos">Recebimentos Externos</button>
+    <button data-env="ECommerce">E-Commerce</button>
+  </nav>
+
+  <!-- Metrics -->
+  <div class="metrics">
+    <div class="metric"><h3>Usuários Ativos</h3><p id="m-users">0</p></div>
+    <div class="metric"><h3>Conexões Ativas</h3><p id="m-conns">0</p></div>
+    <div class="metric"><h3>Transações/Hr</h3><p id="m-tx">0</p></div>
+    <div class="metric"><h3>Incidentes</h3><p id="m-inc">0</p></div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="section-full">
+      <h2>Segurança Avançada</h2>
+      <div id="sec-controls" class="feature-grid"></div>
+    </div>
+<div class="console" id="console"></div>
+    <div class="section-full failures-full">
+      <h2>Falhas & Bloqueios</h2>
+      <ul id="failure-list"></ul>
+    </div>
+    <div class="section-full alerts-full">
+      <h2>Alertas ao Vivo</h2>
+      <div id="alerts-container"></div>
+    </div>
+    <div class="section-full ecommerce-full">
+      <h2>Transações de Pagamento</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Usuário</th><th>Valor</th><th>Status</th></tr></thead>
+        <tbody id="tx-body"></tbody>
+      </table>
+    </div>
+      </main>
+
+  <footer>© 2025 Central Supermercados – ZettaMarket</footer>
+
+  <script>
+    const envButtons = document.querySelectorAll('.env-tabs button');
+    const consoleEl = document.getElementById('console');
+    const secControls = document.getElementById('sec-controls');
+    const alertsContainer = document.getElementById('alerts-container');
+    const failureList = document.getElementById('failure-list');
+    const txBody = document.getElementById('tx-body');
+    const metricsIds = ['m-users','m-conns','m-tx','m-inc'];
+    const features = ['SCRAM','X.509 mTLS','RBAC','TLS/SSL','Rest Encryption','CSFLE','IP Whitelist','Private Endpoint','Audit Logs','PCI/GDPR','Rate Limit','Key Rotation','Monitoring'];
+    let currentEnv = 'zettaSystems';
+
+    function log(msg) {
+      const t = new Date().toLocaleTimeString();
+      consoleEl.textContent += `[${t}] ${msg}\n`;
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function renderSecControls(env) {
+      secControls.innerHTML = '';
+      features.forEach(f => {
+        const div = document.createElement('div'); div.className = 'feature';
+        const name = document.createElement('div'); name.className = 'name'; name.textContent = f;
+        const pct = document.createElement('div'); pct.className = 'pct'; pct.id = `pct-${f}`;
+        div.append(name, pct);
+        secControls.appendChild(div);
+      });
+    }
+
+    function updateAll() {
+      metricsIds.forEach(id => {
+        document.getElementById(id).textContent =
+          Math.floor(Math.random() * (id === 'm-inc' ? 10 : 1000));
+      });
+      features.forEach(f => {
+        document.getElementById(`pct-${f}`).textContent =
+          `${Math.floor(Math.random() * 100)}%`;
+      });
+      if (Math.random() < 0.3) {
+        const types = ['error','warn','info'];
+        const type = types[Math.floor(Math.random() * types.length)];
+        const msg = `${currentEnv}: evento ${Math.random().toString(36).slice(2)}`;
+        const a = document.createElement('div'); a.className = `alert ${type}`;
+        a.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        alertsContainer.prepend(a);
+        log(`ALERT ${type.toUpperCase()}: ${msg}`);
+      }
+      if (Math.random() < 0.2) {
+        const idx = failureList.children.length + 1;
+        const p = document.createElement('li');
+        p.textContent = `${idx}. ${currentEnv}: Falha ${Math.random().toString(36).slice(2)}`;
+        failureList.prepend(p);
+        log(`FAILURE em ${currentEnv}`);
+      }
+      const statuses = ['aprovado','pendente','falha'];
+      const id = `#${Math.floor(Math.random() * 9000 + 1000)}`;
+      const user = `usr${Math.random().toString(36).slice(2)}`;
+      const val = `R$${(Math.random() * 500).toFixed(2)}`;
+      const status = statuses[Math.floor(Math.random() * 3)];
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${id}</td><td>${user}</td><td>${val}</td><td>${status}</td>`;
+      txBody.prepend(tr);
+      log(`TX ${id} – ${status}`);
+    }
+
+    envButtons.forEach(b => b.onclick = () => {
+      envButtons.forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      currentEnv = b.dataset.env;
+      log(`Ambiente ${currentEnv} selecionado`);
+      renderSecControls(currentEnv);
+      failureList.innerHTML = '';
+      alertsContainer.innerHTML = '';
+      txBody.innerHTML = '';
+      consoleEl.innerHTML = '';
+    });
+
+    renderSecControls(currentEnv);
+    setInterval(updateAll, 3000);
+  </script>
+</body>
+</html>
+```
